@@ -21,7 +21,7 @@ export const profile: {
     dev: ['React', 'TypeScript', 'Google Apps Script', 'HTML & CSS'],
     design: ['UI / UX', 'Branding', 'Figma', 'Blender (3D)'],
   },
-  email: null,
+  email: 'adrielharjanto@gmail.com',
   socials: [
     { label: 'GitHub', url: 'https://github.com/djvahd' },
     { label: 'LinkedIn', url: 'https://www.linkedin.com/in/jovanicadrielharjanto/' },

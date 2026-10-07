@@ -25,8 +25,9 @@ it('links each social to its profile and opens it safely in a new tab', () => {
   }
 })
 
-it('shows a placeholder instead of a dead mailto link while the email is unset', () => {
+it('shows the email as a mailto link', () => {
   render(<Contact />)
-  expect(screen.getByText('Email coming soon')).toBeInTheDocument()
-  expect(document.querySelector('a[href^="mailto:"]')).toBeNull()
+  const link = screen.getByRole('link', { name: 'adrielharjanto@gmail.com' })
+  expect(link).toHaveAttribute('href', 'mailto:adrielharjanto@gmail.com')
+  expect(screen.queryByText('Email coming soon')).toBeNull()
 })
