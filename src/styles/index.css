@@ -34,3 +34,34 @@
     scroll-behavior: auto !important;
   }
 }
+
+/* Hero spotlight: a masked terracotta layer that follows the cursor */
+.spotlight-layer {
+  background: var(--accent);
+  color: #f6f4ef;
+  pointer-events: none;
+  -webkit-mask-image: radial-gradient(
+    circle 170px at var(--mx, -9999px) var(--my, -9999px),
+    #000 0,
+    #000 55%,
+    transparent 100%
+  );
+  mask-image: radial-gradient(
+    circle 170px at var(--mx, -9999px) var(--my, -9999px),
+    #000 0,
+    #000 55%,
+    transparent 100%
+  );
+}
+
+/* Dark mode: gradient hero name (cream inside the spotlight lens) */
+[data-theme='dark'] .hero-name {
+  background: linear-gradient(180deg, #646973 0%, #bbccd7 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+[data-theme='dark'] .spotlight-layer .hero-name {
+  background: none;
+  -webkit-text-fill-color: currentColor;
+}
