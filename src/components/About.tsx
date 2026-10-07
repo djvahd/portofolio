@@ -28,9 +28,9 @@ export function About() {
         </h2>
         <div className="mt-12 grid gap-12 md:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)]">
           <ImageWithFallback
-            src="/images/profile.jpg"
+            src="/images/profile.webp"
             alt={`Portrait of ${profile.name}`}
-            className="aspect-[4/5] w-full rounded-2xl object-cover"
+            className="aspect-[4/5] w-full rounded-2xl object-cover object-[50%_42%]"
           />
           <div>
             <p className="max-w-xl text-lg leading-relaxed">{profile.about}</p>

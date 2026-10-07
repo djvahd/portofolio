@@ -9,13 +9,8 @@ describe('profile', () => {
     expect(profile.about.length).toBeGreaterThan(20)
   })
 
-  it('lists the four socials in order, with null or https urls', () => {
-    expect(profile.socials.map((s) => s.label)).toEqual([
-      'GitHub',
-      'LinkedIn',
-      'Instagram',
-      'TikTok',
-    ])
+  it('lists the three socials in order, with null or https urls', () => {
+    expect(profile.socials.map((s) => s.label)).toEqual(['GitHub', 'LinkedIn', 'Instagram'])
     for (const s of profile.socials) {
       expect(s.url === null || s.url.startsWith('https://')).toBe(true)
     }
@@ -47,7 +42,7 @@ describe('projects', () => {
       expect(p.role).not.toBe('')
       expect(p.year).toMatch(/^\d{4}$/)
       expect(p.description).not.toBe('')
-      expect(p.image).toBe(`/images/projects/${p.slug}.webp`)
+      expect(p.image).toMatch(/^\/images\/projects\/[\w-]+\.(png|webp|jpe?g)$/)
       expect(p.liveUrl === null || p.liveUrl.startsWith('https://')).toBe(true)
     }
   })

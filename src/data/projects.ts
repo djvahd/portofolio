@@ -14,8 +14,9 @@ export const projects: Project[] = [
     title: 'Arsipia',
     role: 'Developer & Designer',
     year: '2026',
-    description: 'A digital archive that keeps records organized and easy to find.',
-    image: '/images/projects/arsipia.webp',
+    description:
+      'An automation layer on top of Google Drive that organizes files and passes knowledge between generations of student organization boards.',
+    image: '/images/projects/arsipia.png',
     liveUrl: null,
   },
   {
@@ -23,8 +24,9 @@ export const projects: Project[] = [
     title: 'Smart Odong Campus System',
     role: 'Developer & Designer',
     year: '2026',
-    description: 'A smart campus shuttle (odong-odong) system for Jatinangor.',
-    image: '/images/projects/smart-odong.webp',
+    description:
+      'A smart campus shuttle app with live shuttle status, passenger load, stops, and ride history.',
+    image: '/images/projects/smartodongcampussystem.png',
     liveUrl: null,
   },
   {
@@ -32,17 +34,19 @@ export const projects: Project[] = [
     title: 'Photobooth',
     role: 'Developer & Designer',
     year: '2026',
-    description: 'A web photobooth that captures, frames, and saves photos in the browser.',
-    image: '/images/projects/photobooth.webp',
-    liveUrl: null,
+    description:
+      'A web photobooth built for the Rewind Forum OSIS Jawa Tengah 2026 event, with every photo uploaded automatically.',
+    image: '/images/projects/photobooth.png',
+    liveUrl: 'https://photobooth-webapp.netlify.app/',
   },
   {
     slug: 'harmoni-clothing',
     title: 'Harmoni Clothing',
     role: 'Developer & Designer',
     year: '2026',
-    description: 'An online storefront and brand presence for a clothing label.',
-    image: '/images/projects/harmoni-clothing.webp',
-    liveUrl: null,
+    description:
+      'A modern clothing platform for creators, brands, and communities: custom design with no minimum order.',
+    image: '/images/projects/harmoniclothing.png',
+    liveUrl: 'https://harmoniclothing.com/',
   },
 ]

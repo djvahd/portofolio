@@ -1,5 +1,5 @@
 export interface Social {
-  label: 'GitHub' | 'LinkedIn' | 'Instagram' | 'TikTok'
+  label: 'GitHub' | 'LinkedIn' | 'Instagram'
   url: string | null
 }
 
@@ -23,9 +23,8 @@ export const profile: {
   },
   email: null,
   socials: [
-    { label: 'GitHub', url: null },
-    { label: 'LinkedIn', url: null },
-    { label: 'Instagram', url: null },
-    { label: 'TikTok', url: null },
+    { label: 'GitHub', url: 'https://github.com/djvahd' },
+    { label: 'LinkedIn', url: 'https://www.linkedin.com/in/jovanicadrielharjanto/' },
+    { label: 'Instagram', url: 'https://www.instagram.com/djvahd._/' },
   ],
 }
