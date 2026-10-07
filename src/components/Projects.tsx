@@ -10,9 +10,9 @@ export function Projects() {
           Selected work
         </h2>
       </FadeUp>
-      <div className="mt-12 flex flex-col gap-20">
-        {projects.map((p) => (
-          <FadeUp key={p.slug}>
+      <div data-testid="project-grid" className="mt-12 grid gap-x-8 gap-y-16 md:grid-cols-2">
+        {projects.map((p, i) => (
+          <FadeUp key={p.slug} delay={(i % 2) * 0.1}>
             <ProjectCard project={p} />
           </FadeUp>
         ))}

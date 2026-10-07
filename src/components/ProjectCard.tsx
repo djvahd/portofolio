@@ -4,7 +4,7 @@ import { ImageWithFallback } from './ImageWithFallback'
 function CardBody({ project }: { project: Project }) {
   return (
     <>
-      <div className="aspect-[16/10] overflow-hidden rounded-2xl">
+      <div className="aspect-[16/9] overflow-hidden rounded-2xl border border-line">
         <ImageWithFallback
           src={project.image}
           alt={`${project.title} screenshot`}
@@ -13,7 +13,7 @@ function CardBody({ project }: { project: Project }) {
       </div>
       <div className="mt-5 flex items-start justify-between gap-6">
         <div>
-          <h3 className="font-display text-2xl md:text-4xl">{project.title}</h3>
+          <h3 className="font-display text-2xl md:text-3xl">{project.title}</h3>
           <p className="mt-1 text-sm text-muted">{`${project.role} · ${project.year}`}</p>
           <p className="mt-3 max-w-xl text-muted">{project.description}</p>
         </div>

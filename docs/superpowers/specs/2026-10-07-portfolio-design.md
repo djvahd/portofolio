@@ -31,7 +31,7 @@ Portfolio/
 
 ## Sections (single page)
 1. **Hero:** "Adriel" large, tagline "This is Me". Spotlight effect: a cursor-following soft circle (CSS `mask` + radial-gradient, eased via rAF) reveals the alternate layer, "Developer" → "Designer". On touch devices and under reduced motion: static hero, no effect.
-2. **Selected work:** four large cards in one column, each with screenshot, title, role, year, and a "Live" link (opens in a new tab). Projects: **Arsipia, Smart Odong Campus System, Photobooth, Harmoni Clothing**. Hover: slight image zoom, arrow appears. No per-project detail pages in v1.
+2. **Selected work:** four cards in a two-column grid (one column below the `md` breakpoint), each with screenshot, title, role, year, and a "Live" link (opens in a new tab). Projects: **Arsipia, Smart Odong Campus System, Photobooth, Harmoni Clothing**. Hover: slight image zoom, arrow appears. No per-project detail pages in v1.
 3. **About:** photo, short paragraph, two skill columns (Dev | Design).
 4. **Contact:** email link plus GitHub, LinkedIn, Instagram links. No form.
 
