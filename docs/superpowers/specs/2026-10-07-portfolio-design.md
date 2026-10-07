@@ -33,7 +33,7 @@ Portfolio/
 1. **Hero:** "Adriel" large, tagline "This is Me". Spotlight effect: a cursor-following soft circle (CSS `mask` + radial-gradient, eased via rAF) reveals the alternate layer, "Developer" → "Designer". On touch devices and under reduced motion: static hero, no effect.
 2. **Selected work:** four large cards in one column, each with screenshot, title, role, year, and a "Live" link (opens in a new tab). Projects: **Arsipia, Smart Odong Campus System, Photobooth, Harmoni Clothing**. Hover: slight image zoom, arrow appears. No per-project detail pages in v1.
 3. **About:** photo, short paragraph, two skill columns (Dev | Design).
-4. **Contact:** email link plus GitHub, LinkedIn, Instagram, TikTok links. No form.
+4. **Contact:** email link plus GitHub, LinkedIn, Instagram links. No form.
 
 ## Theming
 CSS variables in `tokens.css`; dark mode overrides them via `[data-theme="dark"]`. `useTheme` reads `localStorage`, falls back to `prefers-color-scheme`, sets the attribute on `<html>`. 300 ms color transition. Toggle in the nav.
@@ -41,7 +41,7 @@ CSS variables in `tokens.css`; dark mode overrides them via `[data-theme="dark"]
 ## Content placeholders (to fill later)
 Marked `TODO` in `data/`; the site renders with sensible fallbacks until they are filled.
 - Per-project: live URL, screenshot, one-line description, role, year.
-- Email address, GitHub / LinkedIn / Instagram / TikTok URLs.
+- Email address, GitHub / LinkedIn / Instagram URLs.
 - About paragraph and skill lists.
 - Profile photo: save as `public/images/profile.jpg`.
 - Screenshots: save as `public/images/projects/<slug>.webp`.

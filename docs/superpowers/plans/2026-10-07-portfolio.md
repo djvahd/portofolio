@@ -16,7 +16,7 @@
 - Dark theme: background `#0C0C0C`, text `#D7E2EA`, hero name gradient `linear-gradient(180deg,#646973,#BBCCD7)`.
 - Fonts: Fraunces (headings), Inter (body), from Google Fonts.
 - Projects (exactly four, in this order): Arsipia, Smart Odong Campus System, Photobooth, Harmoni Clothing. Each card links to a live URL only (no repo links). No per-project detail pages.
-- Socials: GitHub, LinkedIn, Instagram, TikTok. No contact form.
+- Socials: GitHub, LinkedIn, Instagram. No contact form.
 - Hero spotlight: CSS `mask` + radial-gradient, eased in rAF; "Developer" base layer, "Designer" reveal layer. Disabled on touch devices and under `prefers-reduced-motion` (static "Developer & Designer").
 - Tagline: "This is Me".
 - All motion off under `prefers-reduced-motion`. Theme transition 300 ms.
@@ -384,7 +384,7 @@ git commit -m "chore: scaffold vite react ts tailwind vitest and netlify config"
 
 **Interfaces:**
 - Produces:
-  - `interface Social { label: 'GitHub' | 'LinkedIn' | 'Instagram' | 'TikTok'; url: string | null }`
+  - `interface Social { label: 'GitHub' | 'LinkedIn' | 'Instagram'; url: string | null }`
   - `const profile: { name: string; tagline: string; roles: { base: string; reveal: string }; about: string; skills: { dev: string[]; design: string[] }; email: string | null; socials: Social[] }`
   - `interface Project { slug: string; title: string; role: string; year: string; description: string; image: string; liveUrl: string | null }`
   - `const projects: Project[]` (exactly four)
@@ -405,13 +405,8 @@ describe('profile', () => {
     expect(profile.about.length).toBeGreaterThan(20)
   })
 
-  it('lists the four socials in order, with null or https urls', () => {
-    expect(profile.socials.map((s) => s.label)).toEqual([
-      'GitHub',
-      'LinkedIn',
-      'Instagram',
-      'TikTok',
-    ])
+  it('lists the three socials in order, with null or https urls', () => {
+    expect(profile.socials.map((s) => s.label)).toEqual(['GitHub', 'LinkedIn', 'Instagram'])
     for (const s of profile.socials) {
       expect(s.url === null || s.url.startsWith('https://')).toBe(true)
     }
@@ -464,7 +459,7 @@ Expected: FAIL — cannot resolve `./profile`.
 `src/data/profile.ts`:
 ```ts
 export interface Social {
-  label: 'GitHub' | 'LinkedIn' | 'Instagram' | 'TikTok'
+  label: 'GitHub' | 'LinkedIn' | 'Instagram'
   url: string | null
 }
 
@@ -491,7 +486,6 @@ export const profile: {
     { label: 'GitHub', url: null },
     { label: 'LinkedIn', url: null },
     { label: 'Instagram', url: null },
-    { label: 'TikTok', url: null },
   ],
 }
 ```
@@ -1266,10 +1260,10 @@ git commit -m "feat: add selected work section with project cards"
 import { render, screen } from '@testing-library/react'
 import { Contact } from './Contact'
 
-it('shows the contact heading and all four socials', () => {
+it('shows the contact heading and all three socials', () => {
   render(<Contact />)
   expect(screen.getByRole('heading', { level: 2, name: 'Contact' })).toBeInTheDocument()
-  for (const label of ['GitHub', 'LinkedIn', 'Instagram', 'TikTok']) {
+  for (const label of ['GitHub', 'LinkedIn', 'Instagram']) {
     expect(screen.getByText(label)).toBeInTheDocument()
   }
 })
@@ -1569,7 +1563,7 @@ Then commit and push (or redeploy) to publish.
 
 ## Self-Review
 
-**Spec coverage:** Visual tokens, fonts, motion, reduced-motion → Tasks 1, 4, 5. Stack and Netlify → Tasks 1, 8. Structure → File Structure and tasks. Hero spotlight (mask, rAF, touch/reduced-motion off) → Task 4. Selected work (four cards, live links, hover, no detail pages) → Task 5. About and Contact (photo, skills, email, four socials, no form) → Task 6. Theming (variables, storage, system fallback, 300 ms, toggle) → Tasks 1, 3. Placeholders with fallbacks (`null` + image fallback) → Tasks 2, 5, 6. Quality: Vitest for `useTheme` and data shape → Tasks 2, 3; responsive, WCAG, Lighthouse, manual checks → Task 7. Out of scope respected.
+**Spec coverage:** Visual tokens, fonts, motion, reduced-motion → Tasks 1, 4, 5. Stack and Netlify → Tasks 1, 8. Structure → File Structure and tasks. Hero spotlight (mask, rAF, touch/reduced-motion off) → Task 4. Selected work (four cards, live links, hover, no detail pages) → Task 5. About and Contact (photo, skills, email, three socials, no form) → Task 6. Theming (variables, storage, system fallback, 300 ms, toggle) → Tasks 1, 3. Placeholders with fallbacks (`null` + image fallback) → Tasks 2, 5, 6. Quality: Vitest for `useTheme` and data shape → Tasks 2, 3; responsive, WCAG, Lighthouse, manual checks → Task 7. Out of scope respected.
 
 **Placeholder scan:** No TBD/TODO. `null` data values are intentional, spec-mandated fallbacks and are exercised by tests.
 
