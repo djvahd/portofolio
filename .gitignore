@@ -1,0 +1,5 @@
+node_modules
+dist
+*.log
+lighthouse.json
+.DS_Store

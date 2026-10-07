@@ -1,0 +1,16 @@
+:root,
+[data-theme='light'] {
+  --bg: #f6f4ef;
+  --fg: #161616;
+  --muted: #5c5a55;
+  --line: rgba(22, 22, 22, 0.14);
+  --accent: #c2562b;
+}
+
+[data-theme='dark'] {
+  --bg: #0c0c0c;
+  --fg: #d7e2ea;
+  --muted: #9aa7b0;
+  --line: rgba(215, 226, 234, 0.16);
+  --accent: #e0764a;
+}
