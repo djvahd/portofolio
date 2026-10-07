@@ -30,7 +30,7 @@ export function About() {
           <ImageWithFallback
             src="/images/profile.webp"
             alt={`Portrait of ${profile.name}`}
-            className="aspect-[4/5] w-full rounded-2xl object-cover object-[50%_42%]"
+            className="aspect-[4/5] w-full rounded-2xl object-cover object-[50%_45%]"
           />
           <div>
             <p className="max-w-xl text-lg leading-relaxed">{profile.about}</p>

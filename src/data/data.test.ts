@@ -1,3 +1,4 @@
+import { existsSync } from 'node:fs'
 import { profile } from './profile'
 import { projects } from './projects'
 
@@ -42,7 +43,8 @@ describe('projects', () => {
       expect(p.role).not.toBe('')
       expect(p.year).toMatch(/^\d{4}$/)
       expect(p.description).not.toBe('')
-      expect(p.image).toMatch(/^\/images\/projects\/[\w-]+\.(png|webp|jpe?g)$/)
+      expect(p.image).toBe(`/images/projects/${p.slug}.webp`)
+      expect(existsSync(`public${p.image}`)).toBe(true)
       expect(p.liveUrl === null || p.liveUrl.startsWith('https://')).toBe(true)
     }
   })
