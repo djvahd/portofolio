@@ -15,7 +15,7 @@ export const projects: Project[] = [
     role: 'Developer & Designer',
     year: '2026',
     description:
-      'An automation layer on top of Google Drive that organizes files and passes knowledge between generations of student organization boards.',
+      'An automation layer on top of Google Drive that tidies files and keeps knowledge with the team when people change, for offices, startups, communities, and campuses.',
     image: '/images/projects/arsipia.webp',
     liveUrl: 'https://arsipia.netlify.app/',
   },
