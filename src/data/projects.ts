@@ -17,7 +17,7 @@ export const projects: Project[] = [
     description:
       'An automation layer on top of Google Drive that organizes files and passes knowledge between generations of student organization boards.',
     image: '/images/projects/arsipia.webp',
-    liveUrl: null,
+    liveUrl: 'https://arsipia.netlify.app/',
   },
   {
     slug: 'smart-odong',
