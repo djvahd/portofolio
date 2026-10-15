@@ -1,10 +1,18 @@
-import { useEffect, type RefObject } from 'react'
+import { useEffect, useRef, type RefObject } from 'react'
 
 export function ease(current: number, target: number, k: number): number {
   return current + (target - current) * k
 }
 
-export function useSmoothMouse(ref: RefObject<HTMLElement>, enabled: boolean, k = 0.12) {
+export function useSmoothMouse(
+  ref: RefObject<HTMLElement>,
+  enabled: boolean,
+  k = 0.12,
+  locked = false,
+) {
+  const lockedRef = useRef(locked)
+  lockedRef.current = locked
+
   useEffect(() => {
     const el = ref.current
     if (!el || !enabled) return
@@ -15,6 +23,7 @@ export function useSmoothMouse(ref: RefObject<HTMLElement>, enabled: boolean, k 
     let raf = 0
 
     const onMove = (e: PointerEvent) => {
+      if (lockedRef.current) return
       const rect = el.getBoundingClientRect()
       target.x = e.clientX - rect.left
       target.y = e.clientY - rect.top

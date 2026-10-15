@@ -37,8 +37,8 @@
 
 /* Hero spotlight: a masked terracotta layer that follows the cursor */
 .spotlight-layer {
-  background: var(--accent);
-  color: #f6f4ef;
+  background: var(--fg);
+  color: var(--bg);
   pointer-events: none;
   -webkit-mask-image: radial-gradient(
     circle 170px at var(--mx, -9999px) var(--my, -9999px),
@@ -54,6 +54,12 @@
   );
 }
 
+.wireframe-mask {
+  background-color: var(--bg);
+  -webkit-mask: url('/images/hero-wireframe.webp') center bottom / contain no-repeat;
+  mask: url('/images/hero-wireframe.webp') center bottom / contain no-repeat;
+}
+
 /* Dark mode: gradient hero name (cream inside the spotlight lens) */
 [data-theme='dark'] .hero-name {
   background: linear-gradient(180deg, #646973 0%, #bbccd7 100%);
@@ -64,4 +70,14 @@
 [data-theme='dark'] .spotlight-layer .hero-name {
   background: none;
   -webkit-text-fill-color: currentColor;
+}
+
+/* Hero: slowly drifting contour lines behind the name */
+@keyframes contour-drift {
+  to {
+    transform: rotate(6deg) scale(1.06);
+  }
+}
+.contour-drift {
+  animation: contour-drift 40s ease-in-out infinite alternate;
 }
