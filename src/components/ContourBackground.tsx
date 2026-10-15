@@ -16,14 +16,23 @@ export function ContourBackground() {
         />
       </defs>
       {RINGS.map((i) => (
-        <use
+        <g
           key={i}
-          href="#contour"
-          stroke="var(--line)"
-          strokeWidth={1.2}
-          transform={`translate(500 500) rotate(${i * 7}) scale(${0.35 + i * 0.2}) translate(-500 -500)`}
-          vectorEffect="non-scaling-stroke"
-        />
+          className="contour-ring"
+          style={{
+            animationDuration: `${9 + i * 2.5}s`,
+            animationDelay: `-${i * 2.2}s`,
+            animationDirection: i % 2 ? 'alternate-reverse' : 'alternate',
+          }}
+        >
+          <use
+            href="#contour"
+            stroke="var(--line)"
+            strokeWidth={1.2}
+            transform={`translate(500 500) rotate(${i * 7}) scale(${0.35 + i * 0.2}) translate(-500 -500)`}
+            vectorEffect="non-scaling-stroke"
+          />
+        </g>
       ))}
     </svg>
   )

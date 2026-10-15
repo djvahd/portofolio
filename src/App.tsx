@@ -21,10 +21,13 @@ export default function App() {
       <ScrollProgress />
       <Nav theme={theme} onToggle={toggle} />
       <main id="main">
-        <Hero />
-        <Projects />
-        <About />
-        <Contact />
+        <Hero theme={theme} />
+        {/* After the hero scroll the page stays in the opposite theme, all the way down */}
+        <div data-theme={theme === 'light' ? 'dark' : 'light'} className="bg-bg text-fg">
+          <Projects />
+          <About />
+          <Contact />
+        </div>
       </main>
     </>
   )

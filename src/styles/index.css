@@ -40,18 +40,9 @@
   background: var(--fg);
   color: var(--bg);
   pointer-events: none;
-  -webkit-mask-image: radial-gradient(
-    circle 170px at var(--mx, -9999px) var(--my, -9999px),
-    #000 0,
-    #000 55%,
-    transparent 100%
-  );
-  mask-image: radial-gradient(
-    circle 170px at var(--mx, -9999px) var(--my, -9999px),
-    #000 0,
-    #000 55%,
-    transparent 100%
-  );
+  /* --blob is a liquid path() written every frame by useSmoothMouse */
+  -webkit-clip-path: var(--blob, circle(0px));
+  clip-path: var(--blob, circle(0px));
 }
 
 .wireframe-mask {
@@ -80,4 +71,30 @@
 }
 .contour-drift {
   animation: contour-drift 40s ease-in-out infinite alternate;
+}
+@keyframes contour-ring {
+  from {
+    transform: rotate(-7deg) scale(0.94) translate(-1.5%, 1%);
+  }
+  to {
+    transform: rotate(7deg) scale(1.06) translate(1.5%, -1%);
+  }
+}
+/* Running text on the stage: endless, rows in opposite directions */
+@keyframes marquee-slide {
+  to {
+    transform: translateX(-50%);
+  }
+}
+.marquee-left {
+  animation: marquee-slide 60s linear infinite;
+}
+.marquee-right {
+  animation: marquee-slide 60s linear infinite reverse;
+}
+
+.contour-ring {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: contour-ring 14s ease-in-out infinite alternate;
 }
