@@ -36,17 +36,19 @@ export function Preloader() {
       {show && (
         <motion.div
           aria-hidden="true"
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-fg text-bg"
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-bg text-fg"
           exit={{ y: '-100%' }}
           transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
         >
           <motion.span
-            className="font-display text-[clamp(3rem,12vw,9rem)] font-semibold tracking-tight"
+            // The name is set exactly like the hero's, so the intro hands over to it seamlessly
+            className="hero-name text-[clamp(3rem,12vw,9rem)] leading-[0.9] tracking-tight"
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
           >
-            {profile.name}
+            <span className="font-display font-light">{profile.name.slice(0, -2)}</span>
+            <span className="font-sans font-extrabold">{profile.name.slice(-2)}</span>
           </motion.span>
         </motion.div>
       )}
