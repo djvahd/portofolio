@@ -1,20 +1,21 @@
 import { useEffect, useRef, type RefObject } from 'react'
 
 const BASE_RADIUS = 110
-const LINGER_MS = 70 // the liquid is a trail: it starts melting as soon as the pointer stops
-const MELT = 0.1 // how fast it melts away (per frame)
-const POINTS = 10
+const LINGER_MS = 70 // the blob starts melting this soon after the pointer stops
+const MELT = 0.06 // how slowly it melts away (per frame): about a second to be gone
+const POINTS = 16
 
 // An idle "ghost pointer" that now and then swipes edge to edge in fast diagonal zig-zags,
-// leaving a long liquid trail whose tail dissolves first, in the order it was laid down.
+// leaving a longer trail of the same kind.
 const IDLE_MS = 2500
 const GHOST_SEGMENTS = 4
 const GHOST_SEGMENT_MS = 380
 const GHOST_GAP_MIN = 2500
 const GHOST_GAP_RANGE = 2500
 const SCROLL_PAUSE_MS = 800 // no swipe starts this soon after the page last scrolled
-const TRAIL_MS = 1300 // how long a piece of the trail lives
-const TRAIL_SPACING = 28 // px between the points the trail's outline is built from
+const JITTER_PX = 4 // pointer or scroll movement below this is noise and never cancels a swipe
+const TRAIL_MS = 1300 // how long a piece of the ghost's trail lives
+const TRAIL_SPACING = 28 // px between the points a trail's outline is built from
 
 const smooth = (v: number) => v * v * (3 - 2 * v)
 
@@ -31,27 +32,34 @@ export function zigzag(x0: number, y0: number, dx: number, dy: number, segments:
 }
 
 /**
- * A closed, smooth blob as SVG path data: POINTS radii wobbling over time (t in ms),
- * stretched along the direction of motion (vx, vy in px/frame) like a liquid droplet.
+ * A closed, smooth blob as SVG path data, shaped like a droplet in motion: round at the front,
+ * drawn out into a soft tail behind when it moves (vx, vy in px/frame), with a slow, gentle
+ * wobble (t in ms) so the edge never sits still.
  */
 function blobD(cx: number, cy: number, radius: number, t: number, vx = 0, vy = 0): string {
   const speed = Math.hypot(vx, vy)
-  const stretch = 1 + Math.min(speed * 0.03, 0.45)
-  const squash = 1 / Math.sqrt(stretch) // keeps the area roughly constant
   const dirX = speed > 0.01 ? vx / speed : 1
   const dirY = speed > 0.01 ? vy / speed : 0
+  const tail = 1 + Math.min(speed * 0.045, 0.85) // how far the back is drawn out
+  const nose = 1 + Math.min(speed * 0.01, 0.15) // the front only swells a little
+  const squash = 1 / Math.sqrt(tail) // the body narrows as the tail lengthens
 
   const pts: [number, number][] = []
   for (let i = 0; i < POINTS; i++) {
-    const a = (i / POINTS) * Math.PI * 2 + t * 0.0003
-    const wobble = 1 + 0.22 * Math.sin(t * 0.0013 + i * 1.7) + 0.14 * Math.sin(t * 0.0022 + i * 2.9)
+    const a = (i / POINTS) * Math.PI * 2
+    // A few slow, smooth lobes drifting around the edge: organic, never lumpy or spiky
+    const wobble =
+      1 +
+      0.07 * Math.sin(2 * a + t * 0.0011) +
+      0.05 * Math.sin(3 * a - t * 0.0016) +
+      0.03 * Math.sin(5 * a + t * 0.0023)
     const lx = Math.cos(a) * radius * wobble
     const ly = Math.sin(a) * radius * wobble
-    const along = (lx * dirX + ly * dirY) * stretch
+    const along = lx * dirX + ly * dirY
     const across = (-lx * dirY + ly * dirX) * squash
-    pts.push([cx + along * dirX - across * dirY, cy + along * dirY + across * dirX])
+    const stretched = along * (along < 0 ? tail : nose)
+    pts.push([cx + stretched * dirX - across * dirY, cy + stretched * dirY + across * dirX])
   }
-
   return smoothClosed(pts)
 }
 
@@ -136,6 +144,28 @@ function follow(blob: Blob, tx: number, ty: number, k: number) {
   blob.vy = ease(blob.vy, blob.y - py, 0.25)
 }
 
+/** Samples younger than `lifeMs` (a clock that went backwards counts as expired). */
+function alive(trail: TrailSample[], now: number, lifeMs: number) {
+  return trail.filter((s) => now - s.born >= 0 && now - s.born < lifeMs)
+}
+
+/** The shape of a trail: one ribbon, thinner the older a piece is, so the tail goes first. */
+function trailShape(trail: TrailSample[], now: number, radius: number, lifeMs: number) {
+  const pts: { x: number; y: number; r: number }[] = []
+  trail.forEach((s, i) => {
+    const age = now - s.born
+    const life = smooth(1 - age / lifeMs)
+    const grow = Math.min(1, 0.35 + age / 120) // the head swells in instead of popping
+    const r = radius * life * grow
+    const prev = pts[pts.length - 1]
+    const spaced = !prev || Math.hypot(s.x - prev.x, s.y - prev.y) >= TRAIL_SPACING
+    if (r >= 2 && (spaced || i === trail.length - 1)) pts.push({ x: s.x, y: s.y, r })
+  })
+  if (pts.length === 0) return null
+  if (pts.length === 1) return blobD(pts[0].x, pts[0].y, pts[0].r, now)
+  return ribbonD(pts, now)
+}
+
 export function useSmoothMouse(
   ref: RefObject<HTMLElement>,
   enabled: boolean,
@@ -154,23 +184,35 @@ export function useSmoothMouse(
     let seeded = false
     let real = false // a real pointer is inside the window
     let lastMove = performance.now()
-    let presence = 0 // 0 = no liquid, 1 = full-size liquid
+    let presence = 0 // the blob under the pointer: 0 = gone, 1 = full size
     let raf = 0
 
-    let trail: TrailSample[] = []
+    let ghostTrail: TrailSample[] = []
     let ghostPath: [number, number][] = []
     let ghostStart = 0 // 0 = not swiping
     let ghostLast: [number, number] = [0, 0]
     let nextGhost = performance.now() + IDLE_MS
     let lastScroll = -Infinity
+    let lastScrollY = window.scrollY
+    let lastPointer: [number, number] | null = null
 
-    // The swipes only play while the page rests at the top; any scroll cancels one mid-way
+    // The swipes only play while the page rests at the top; a real scroll cancels one mid-way
     const onScroll = () => {
+      if (Math.abs(window.scrollY - lastScrollY) < JITTER_PX) return
+      lastScrollY = window.scrollY
       lastScroll = performance.now()
       ghostStart = 0
     }
 
     const onMove = (e: PointerEvent) => {
+      // A "still" mouse still twitches, and browsers re-send moves after layout changes
+      if (
+        lastPointer &&
+        Math.hypot(e.clientX - lastPointer[0], e.clientY - lastPointer[1]) < JITTER_PX
+      ) {
+        return
+      }
+      lastPointer = [e.clientX, e.clientY]
       lastMove = performance.now()
       real = true
       ghostStart = 0 // a real pointer takes over; the trail left behind keeps dissolving
@@ -180,7 +222,7 @@ export function useSmoothMouse(
       target.x = e.clientX - rect.left
       target.y = e.clientY - rect.top
       if (!seeded || presence < 0.05) {
-        // A fresh splash starts under the pointer instead of streaking in from the last spot
+        // A fresh blob starts under the pointer instead of streaking in from the last spot
         Object.assign(lens, { x: target.x, y: target.y, vx: 0, vy: 0 })
         seeded = true
       }
@@ -194,9 +236,12 @@ export function useSmoothMouse(
       const isLocked = lockedRef.current
       const moving = now - lastMove < LINGER_MS
       const idle = !isLocked && now - lastMove > IDLE_MS
+      follow(lens, target.x, target.y, k)
+
+      // Hover: the blob swells up while the pointer moves, and melts away slowly once it stops.
+      // Locked, it stays put where it was left.
       const wanted = seeded && (isLocked || (real && moving))
       presence = ease(presence, wanted ? 1 : 0, wanted ? 0.3 : MELT)
-      follow(lens, target.x, target.y, k)
 
       // The ghost pointer: a fast diagonal zig-zag swipe now and then while nobody is hovering
       const atRest = window.scrollY < 24 && now - lastScroll > SCROLL_PAUSE_MS
@@ -223,35 +268,19 @@ export function useSmoothMouse(
           const [bx, by] = ghostPath[seg + 1]
           const x = ease(ax, bx, s)
           const y = ease(ay, by, s)
-          trail.push({ x, y, vx: x - ghostLast[0], vy: y - ghostLast[1], born: now })
+          ghostTrail.push({ x, y, vx: x - ghostLast[0], vy: y - ghostLast[1], born: now })
           ghostLast = [x, y]
         }
       }
-      // Oldest samples die first, so the tail dissolves piece by piece (a clock that went
-      // backwards counts as expired too)
-      trail = trail.filter((s) => now - s.born >= 0 && now - s.born < TRAIL_MS)
+      ghostTrail = alive(ghostTrail, now, TRAIL_MS)
 
-      // smooth() makes each shrink ease out like a droplet being absorbed
       const shapes: string[] = []
       if (presence >= 0.02) {
         shapes.push(blobD(lens.x, lens.y, BASE_RADIUS * smooth(presence), now, lens.vx, lens.vy))
       }
-      // The ghost's trail is one ribbon: thinner the older a piece is, so the tail goes first
-      const ribbon: { x: number; y: number; r: number }[] = []
-      trail.forEach((s, i) => {
-        const age = now - s.born
-        const life = smooth(1 - age / TRAIL_MS)
-        const grow = Math.min(1, 0.35 + age / 120) // the head swells in instead of popping
-        const r = BASE_RADIUS * 0.85 * life * grow
-        const prev = ribbon[ribbon.length - 1]
-        const spaced = !prev || Math.hypot(s.x - prev.x, s.y - prev.y) >= TRAIL_SPACING
-        if (r >= 2 && (spaced || i === trail.length - 1)) ribbon.push({ x: s.x, y: s.y, r })
-      })
-      if (ribbon.length === 1) {
-        shapes.push(blobD(ribbon[0].x, ribbon[0].y, ribbon[0].r, now))
-      } else if (ribbon.length > 1) {
-        shapes.push(ribbonD(ribbon, now))
-      }
+      const ghost = trailShape(ghostTrail, now, BASE_RADIUS * 0.85, TRAIL_MS)
+      if (ghost) shapes.push(ghost)
+
       const blob = shapes.length ? `path('${shapes.join('')}')` : 'circle(0px)'
       el.style.setProperty('--blob', blob)
       // Layers outside the stage (like the header) can mirror the liquid, drawn above their own

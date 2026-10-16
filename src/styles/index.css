@@ -6,6 +6,11 @@
 @layer base {
   html {
     background: var(--bg);
+    /* The page still scrolls; only the bar is hidden */
+    scrollbar-width: none;
+  }
+  html::-webkit-scrollbar {
+    display: none;
   }
   body {
     background: var(--bg);

@@ -29,7 +29,7 @@ describe('blobPath', () => {
     const d = blobPath(100, 100, 50, 0)
     expect(d.startsWith("path('M")).toBe(true)
     expect(d.endsWith("Z')")).toBe(true)
-    expect(d.match(/C/g)).toHaveLength(10)
+    expect(d.match(/C/g)).toHaveLength(16)
   })
 
   it('wobbles over time even when nothing else changes', () => {
@@ -97,13 +97,34 @@ describe('useSmoothMouse liquid', () => {
     expect(shapes()).toBe(1)
   })
 
-  it('melts away right after the pointer stops', () => {
+  it('draws the blob out into a soft tail behind the direction of motion', () => {
+    const coords = (d: string) => [...d.matchAll(/(-?\d+\.\d) (-?\d+\.\d)/g)].map((m) => [+m[1], +m[2]])
+    const extent = (d: string, axis: 0 | 1) => {
+      const v = coords(d).map((c) => c[axis])
+      return [Math.min(...v), Math.max(...v)]
+    }
+    const rest = blobPath(0, 0, 100, 0, 0, 0)
+    const moving = blobPath(0, 0, 100, 0, 25, 0) // moving right, fast
+    const [movingMin, movingMax] = extent(moving, 0)
+    const [restMin, restMax] = extent(rest, 0)
+    expect(movingMin).toBeLessThan(restMin * 1.4) // the tail reaches much farther left
+    expect(-movingMin).toBeGreaterThan(movingMax * 1.3) // and the front stays rounder than the back
+    expect(restMax - restMin).toBeLessThan(movingMax - movingMin)
+    const [hMin, hMax] = extent(moving, 1)
+    const [rhMin, rhMax] = extent(rest, 1)
+    expect(hMax - hMin).toBeLessThan(rhMax - rhMin) // the body narrows as the tail lengthens
+  })
+
+  it('melts away slowly once the pointer stops, not all at once', () => {
     const { move, frames, blob } = setup()
     move(120)
     frames(30)
     expect(blob()).toMatch(/^path\(/)
-    frames(40, performance.now() + 300) // 300 ms later: stopped, but not yet idle
-    expect(blob()).toBe(HIDDEN)
+    const stopped = performance.now() + 300 // 300 ms later: stopped, but not yet idle
+    frames(20, stopped)
+    expect(blob()).toMatch(/^path\(/) // a third of a second on, it is still there, shrinking
+    frames(100, stopped + 20 * 16)
+    expect(blob()).toBe(HIDDEN) // gone after about a second and a half
   })
 
   it('swipes a ghost pointer across the page while idle, then lets go', () => {
@@ -129,7 +150,7 @@ describe('useSmoothMouse liquid', () => {
     frames(1, LATER + 700)
     expect(blob()).toBe(HIDDEN) // the page is not resting at the top
 
-    Object.defineProperty(window, 'scrollY', { value: 0, configurable: true })
+    Object.defineProperty(window, 'scrollY', { value: 10, configurable: true })
     vi.spyOn(performance, 'now').mockReturnValue(LATER)
     window.dispatchEvent(new Event('scroll'))
     frames(1, LATER + 300)
@@ -139,6 +160,26 @@ describe('useSmoothMouse liquid', () => {
     frames(1, LATER + 2600) // the page has rested long enough
     frames(1, LATER + 3000)
     expect(blob()).toMatch(/^path\(/)
+  })
+
+  it('lets a swipe finish through pointer twitches and scroll noise, but not a real move', () => {
+    vi.spyOn(Math, 'random').mockReturnValue(0)
+    const { move, frames, blob } = setup()
+    const curves = () => (blob().match(/C/g) ?? []).length // grows as the ribbon gets longer
+    move(100) // the pointer rests here
+    for (let i = 0; i < 18; i++) frames(1, LATER + i * 16) // a swipe is under way
+    const early = curves()
+
+    move(101) // a twitch
+    window.dispatchEvent(new Event('scroll')) // scroll event with no real scrolling
+    for (let i = 0; i < 18; i++) frames(1, LATER + 288 + i * 16)
+    expect(curves()).toBeGreaterThan(early) // still being drawn
+
+    move(300) // a real move hands the page back to the pointer
+    for (let i = 0; i < 18; i++) frames(1, LATER + 576 + i * 16)
+    const after = curves()
+    frames(1, LATER + 576 + 18 * 16)
+    expect(curves()).toBeLessThanOrEqual(after) // nothing new is added
   })
 
   it('does not swipe while locked', () => {
@@ -189,7 +230,7 @@ describe('useSmoothMouse liquid', () => {
     move(120)
     frames(30)
     document.documentElement.dispatchEvent(new Event('pointerleave'))
-    frames(60, 30 * 16)
+    frames(130, 30 * 16)
     expect(blob()).toBe(HIDDEN)
   })
 })
