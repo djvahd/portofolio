@@ -73,6 +73,16 @@ describe('useSmoothMouse liquid', () => {
     document.body.innerHTML = ''
   })
 
+  it('mirrors the liquid onto marked layers outside the stage, like the header', () => {
+    const { move, frames, blob } = setup()
+    const mirror = document.body.appendChild(document.createElement('header'))
+    mirror.setAttribute('data-lens-mirror', '')
+    move(120)
+    frames(30)
+    expect(blob()).toMatch(/^path\(/)
+    expect(mirror.style.getPropertyValue('--blob')).toBe(blob())
+  })
+
   it('shows nothing before any pointer arrives', () => {
     const { frames, blob } = setup()
     frames(5)
@@ -110,6 +120,25 @@ describe('useSmoothMouse liquid', () => {
     expect(dissolving).toBeLessThan(during)
     frames(1, LATER + 3000) // the rest has dissolved too, next swipe still seconds away
     expect(blob()).toBe(HIDDEN)
+  })
+
+  it('keeps the swipe away from scrolling: not while scrolled, not right after a scroll', () => {
+    const { frames, blob } = setup()
+    Object.defineProperty(window, 'scrollY', { value: 200, configurable: true })
+    frames(1, LATER)
+    frames(1, LATER + 700)
+    expect(blob()).toBe(HIDDEN) // the page is not resting at the top
+
+    Object.defineProperty(window, 'scrollY', { value: 0, configurable: true })
+    vi.spyOn(performance, 'now').mockReturnValue(LATER)
+    window.dispatchEvent(new Event('scroll'))
+    frames(1, LATER + 300)
+    frames(1, LATER + 700)
+    expect(blob()).toBe(HIDDEN) // scrolled a moment ago
+
+    frames(1, LATER + 2600) // the page has rested long enough
+    frames(1, LATER + 3000)
+    expect(blob()).toMatch(/^path\(/)
   })
 
   it('does not swipe while locked', () => {

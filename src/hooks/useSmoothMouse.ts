@@ -12,6 +12,7 @@ const GHOST_SEGMENTS = 4
 const GHOST_SEGMENT_MS = 380
 const GHOST_GAP_MIN = 2500
 const GHOST_GAP_RANGE = 2500
+const SCROLL_PAUSE_MS = 800 // no swipe starts this soon after the page last scrolled
 const TRAIL_MS = 1300 // how long a piece of the trail lives
 const TRAIL_SPACING = 28 // px between the points the trail's outline is built from
 
@@ -161,6 +162,13 @@ export function useSmoothMouse(
     let ghostStart = 0 // 0 = not swiping
     let ghostLast: [number, number] = [0, 0]
     let nextGhost = performance.now() + IDLE_MS
+    let lastScroll = -Infinity
+
+    // The swipes only play while the page rests at the top; any scroll cancels one mid-way
+    const onScroll = () => {
+      lastScroll = performance.now()
+      ghostStart = 0
+    }
 
     const onMove = (e: PointerEvent) => {
       lastMove = performance.now()
@@ -191,8 +199,9 @@ export function useSmoothMouse(
       follow(lens, target.x, target.y, k)
 
       // The ghost pointer: a fast diagonal zig-zag swipe now and then while nobody is hovering
-      if (isLocked) ghostStart = 0
-      if (idle && !ghostStart && now >= nextGhost) {
+      const atRest = window.scrollY < 24 && now - lastScroll > SCROLL_PAUSE_MS
+      if (isLocked || !atRest) ghostStart = 0
+      if (idle && atRest && !ghostStart && now >= nextGhost) {
         // From beyond the left edge to beyond the right edge, and back, working down the page
         const x0 = -BASE_RADIUS
         const dx = el.clientWidth + 2 * BASE_RADIUS
@@ -243,7 +252,13 @@ export function useSmoothMouse(
       } else if (ribbon.length > 1) {
         shapes.push(ribbonD(ribbon, now))
       }
-      el.style.setProperty('--blob', shapes.length ? `path('${shapes.join('')}')` : 'circle(0px)')
+      const blob = shapes.length ? `path('${shapes.join('')}')` : 'circle(0px)'
+      el.style.setProperty('--blob', blob)
+      // Layers outside the stage (like the header) can mirror the liquid, drawn above their own
+      // content; they share the stage's origin while it is pinned, so the same path lines up
+      document
+        .querySelectorAll<HTMLElement>('[data-lens-mirror]')
+        .forEach((m) => m.style.setProperty('--blob', blob))
       raf = requestAnimationFrame(tick)
     }
 
@@ -251,10 +266,12 @@ export function useSmoothMouse(
     // would see the pointer "leave" whenever it passes over the header.
     const root = document.documentElement
     window.addEventListener('pointermove', onMove)
+    window.addEventListener('scroll', onScroll, { passive: true })
     root.addEventListener('pointerleave', onLeave)
     raf = requestAnimationFrame(tick)
     return () => {
       window.removeEventListener('pointermove', onMove)
+      window.removeEventListener('scroll', onScroll)
       root.removeEventListener('pointerleave', onLeave)
       cancelAnimationFrame(raf)
     }

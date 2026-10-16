@@ -45,6 +45,15 @@
   clip-path: var(--blob, circle(0px));
 }
 
+/* The header's copy of the lens: the liquid shape reveals inverted colours over the header */
+.lens-header {
+  background: var(--fg);
+  color: var(--bg);
+  pointer-events: none;
+  -webkit-clip-path: var(--blob, circle(0px));
+  clip-path: var(--blob, circle(0px));
+}
+
 .wireframe-mask {
   background-color: var(--bg);
   -webkit-mask: url('/images/hero-wireframe.webp') center bottom / contain no-repeat;
