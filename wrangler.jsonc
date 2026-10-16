@@ -1,9 +1,7 @@
 {
-  // Cloudflare Workers Builds: serve the Vite build as static assets.
-  // "name" must match the project name in the Cloudflare dashboard.
+  // Cloudflare Pages: serve the Vite build. "name" is the Pages project name,
+  // which also gives the adriel-portofolio.pages.dev address.
   "name": "adriel-portofolio",
   "compatibility_date": "2026-10-16",
-  "assets": {
-    "directory": "./dist"
-  }
+  "pages_build_output_dir": "./dist"
 }
