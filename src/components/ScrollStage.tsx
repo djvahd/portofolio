@@ -34,21 +34,32 @@ export function useHeroGeometry(progress: MotionValue<number>) {
     }
   }, [])
 
-  const wide = size.w >= 768
-  const startH = wide ? 0.88 : 0.72 // portrait height as a share of the panel
-  const startRight = wide ? 0.08 : 0.04
-  const startPhotoW = startH * size.h * PHOTO_ASPECT
-  const startLeftPct = (1 - startRight - startPhotoW / size.w) * 100
+  // Tall screens (phones, tablets held upright) stack the words above a centred portrait;
+  // wide screens put the portrait to the right. Either way it never outgrows the screen's width.
+  const upright = size.h > size.w
+  const baseH = upright ? 0.62 : 0.88 // portrait height as a share of the panel
+  const maxW = upright ? 0.92 : 0.6 // ...and its widest, as a share of the screen's width
+  const startPhotoW = Math.min(baseH * size.h * PHOTO_ASPECT, maxW * size.w)
+  const startH = startPhotoW / PHOTO_ASPECT / size.h
+  const startLeft = upright ? (1 - startPhotoW / size.w) / 2 : 1 - 0.08 - startPhotoW / size.w
+  const startLeftPct = startLeft * 100
 
-  // The box takes a fixed share of the screen: about a third wide and 40% tall
-  const endW = size.w * (wide ? 0.327 : 0.62)
-  const endH = size.h * (wide ? 0.397 : 0.42)
+  // The box takes a fixed share of the screen: about a third wide and 40% tall on a wide screen,
+  // nearly three quarters of the width on a tall one
+  const endW = size.w * (upright ? 0.74 : 0.327)
+  const endH = Math.max(size.h * (upright ? 0.38 : 0.397), 140)
   const endPhotoW = endH * END_PHOTO_H * PHOTO_ASPECT
   const endLeftPct = ((endW - endPhotoW) / 2 / endW) * 100
 
   const range = [0, 0.45]
   const opts = { ease: easeInOut }
   return {
+    // Where the portrait starts, for layers that must line up with it (the lens's wireframe)
+    start: {
+      left: `${startLeftPct}%`,
+      top: `${(1 - startH) * 100}%`,
+      height: `${startH * 100}%`,
+    },
     left: useTransform(progress, range, [0, (size.w - endW) / 2], opts),
     top: useTransform(progress, range, [0, (size.h - endH) / 2], opts),
     width: useTransform(progress, range, [size.w, endW], opts),
@@ -64,7 +75,8 @@ export function StageBackdrop({ progress, theme }: { progress: MotionValue<numbe
   const opacity = useTransform(progress, [0.12, 0.38], [0, 1])
   const textOpacity = useTransform(progress, [0.3, 0.5], [0, 1])
   // Sized by the shorter of width and height, so both rows always fit on screen
-  const size = 'text-[clamp(2rem,min(6.3vw,11.8vh),7.5rem)]'
+  const size =
+    'text-[clamp(2rem,min(6.3vw,11.8vh),7.5rem)] portrait:text-[clamp(2.5rem,15vw,5rem)]'
   const row = `flex w-max whitespace-nowrap uppercase ${size}`
 
   return (
@@ -76,7 +88,8 @@ export function StageBackdrop({ progress, theme }: { progress: MotionValue<numbe
     >
       <motion.div
         style={{ opacity: textOpacity }}
-        className="absolute inset-x-0 top-1/2 -translate-y-1/2 select-none leading-[0.92]"
+        // Held upright, the box covers most of the width: one row rides above it, one below
+        className="absolute inset-x-0 top-1/2 flex -translate-y-1/2 select-none flex-col leading-[0.92] portrait:gap-[calc(38vh+1.5rem)]"
       >
         {/* Two copies per row, so sliding by half a row loops seamlessly and never stops */}
         <div className={`${row} marquee-left font-display font-light text-muted`}>
@@ -103,7 +116,7 @@ export function Signature({ progress, theme }: { progress: MotionValue<number>; 
       viewBox="0 0 1180 775"
       fill="none"
       style={{ opacity: visible }}
-      className="pointer-events-none absolute left-1/2 top-1/2 z-[4] w-[90vw] -translate-x-1/2 -translate-y-1/2 md:w-[min(61.5vw,117vh)]"
+      className="pointer-events-none absolute left-1/2 top-1/2 z-[4] w-[90vw] -translate-x-1/2 -translate-y-1/2 landscape:w-[min(61.5vw,117vh)]"
     >
       <motion.path
         d={SIGNATURE_PATH}

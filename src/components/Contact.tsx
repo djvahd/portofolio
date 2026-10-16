@@ -16,7 +16,7 @@ export function Contact() {
           {profile.email ? (
             <a
               href={`mailto:${profile.email}`}
-              className="break-all font-display text-3xl underline decoration-line underline-offset-8 transition-colors hover:decoration-fg md:text-5xl"
+              className="font-display text-[clamp(1.25rem,6.2vw,1.875rem)] underline decoration-line underline-offset-8 transition-colors [overflow-wrap:anywhere] hover:decoration-fg md:text-5xl"
             >
               {profile.email}
             </a>

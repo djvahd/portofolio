@@ -14,14 +14,10 @@ import type { Theme } from '../hooks/useTheme'
 import { ContourBackground } from './ContourBackground'
 import { Signature, StageBackdrop, useHeroGeometry } from './ScrollStage'
 
-// Where the hero draws the portrait: bottom right, as a share of the screen. The lens's
-// wireframe copy uses the same box; the real portrait is moved by useHeroGeometry.
-const WIREFRAME_BOX =
-  'absolute bottom-0 right-[4%] aspect-[900/1137] h-[72%] md:right-[8%] md:h-[88%]'
-
 function HeroText({ role, heading }: { role: string; heading: boolean }) {
   const nameClass =
-    'hero-name relative text-[clamp(4rem,15vw,12rem)] leading-[0.9] tracking-tight'
+    // Sized by the shorter of width and height, so the words fit short windows and phones on their side
+    'hero-name relative text-[clamp(2.5rem,min(15vw,24vh),12rem)] leading-[0.9] tracking-tight'
   const name = (
     <>
       <span className="font-display font-light">{profile.name.slice(0, -2)}</span>
@@ -29,7 +25,8 @@ function HeroText({ role, heading }: { role: string; heading: boolean }) {
     </>
   )
   return (
-    <div className="mx-auto flex h-full max-w-6xl flex-col justify-center px-6 pt-20">
+    // Held upright, the words sit at the top and leave the portrait below them clear
+    <div className="mx-auto flex h-full max-w-6xl flex-col justify-center px-6 pt-20 portrait:justify-start portrait:pt-28">
       {heading ? (
         <h1 aria-label={profile.name} className={nameClass}>
           {name}
@@ -37,10 +34,12 @@ function HeroText({ role, heading }: { role: string; heading: boolean }) {
       ) : (
         <div className={nameClass}>{name}</div>
       )}
-      <p className="relative mt-4 text-sm font-medium uppercase tracking-[0.2em]">
+      <p className="relative mt-3 text-sm font-medium uppercase tracking-[0.2em] md:mt-4">
         {profile.tagline}
       </p>
-      <p className="relative mt-6 font-display text-[clamp(1.5rem,4vw,3rem)] italic">{role}</p>
+      <p className="relative mt-4 font-display text-[clamp(1rem,min(4vw,6.5vh),3rem)] italic md:mt-6">
+        {role}
+      </p>
     </div>
   )
 }
@@ -82,7 +81,11 @@ export function Hero({ theme = 'light' }: { theme?: Theme }) {
       aria-label="Introduction"
       className={reduce ? 'relative h-screen' : 'relative h-[170vh]'}
     >
-      <div ref={stageRef} className="sticky top-0 h-screen overflow-hidden">
+      {/* svh: on phones the visible screen is shorter than vh while the address bar shows */}
+      <div
+        ref={stageRef}
+        className="sticky top-0 h-screen overflow-hidden supports-[height:100svh]:h-[100svh]"
+      >
         {!reduce && <StageBackdrop progress={progress} theme={inverse} />}
 
         <motion.div
@@ -125,7 +128,11 @@ export function Hero({ theme = 'light' }: { theme?: Theme }) {
                 }`}
               >
                 <HeroText heading={false} role={profile.roles.reveal} />
-                <div className={`${WIREFRAME_BOX} wireframe-mask`} />
+                {/* the lens's copy of the portrait, exactly where the hero starts it */}
+                <div
+                  style={geo.start}
+                  className="wireframe-mask absolute aspect-[900/1137]"
+                />
               </div>
             </motion.div>
             <motion.button
