@@ -1,0 +1,9 @@
+{
+  // Cloudflare Workers Builds: serve the Vite build as static assets.
+  // "name" must match the project name in the Cloudflare dashboard.
+  "name": "adriel-portofolio",
+  "compatibility_date": "2026-10-16",
+  "assets": {
+    "directory": "./dist"
+  }
+}
