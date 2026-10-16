@@ -2,13 +2,13 @@ import { useEffect, useState } from 'react'
 import { easeInOut, motion, useTransform, type MotionValue } from 'framer-motion'
 import type { Theme } from '../hooks/useTheme'
 
-// Placeholder scribble (1180 × 775, the proportions of a big signature): swap this path for
+// Placeholder scribble (1180 x 775, the proportions of a big signature): swap this path for
 // the real signature. Any set of strokes works; they are drawn one after another.
 const SIGNATURE_PATH =
   'M20 625C150 650 330 610 560 520C760 440 930 330 1040 215C1090 150 1060 90 990 100C900 112 790 190 700 280L880 8M880 8L395 760M395 760L520 725C640 690 800 640 920 560C960 530 1000 520 1030 540C1060 560 1000 600 960 610L1160 505'
 
-const LINE_A = 'I build systems — '
-const LINE_B = 'I shape interfaces — '
+const LINE_A = 'I build systems • '
+const LINE_B = 'I shape interfaces • '
 
 const PHOTO_ASPECT = 900 / 1137
 const END_PHOTO_H = 1.18 // portrait is a bit larger than the box, so its lower edge is cropped
