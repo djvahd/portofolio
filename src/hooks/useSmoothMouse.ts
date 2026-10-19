@@ -215,7 +215,6 @@ export function useSmoothMouse(
       lastPointer = [e.clientX, e.clientY]
       lastMove = performance.now()
       real = true
-      ghostStart = 0 // a real pointer takes over; the trail left behind keeps dissolving
       if (lockedRef.current) return
       if ((e.target as Element).closest?.('[data-lens-ignore]')) return
       const rect = el.getBoundingClientRect()

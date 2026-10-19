@@ -162,7 +162,7 @@ describe('useSmoothMouse liquid', () => {
     expect(blob()).toMatch(/^path\(/)
   })
 
-  it('lets a swipe finish through pointer twitches and scroll noise, but not a real move', () => {
+  it('lets a swipe finish through pointer twitches, real moves and scroll noise', () => {
     vi.spyOn(Math, 'random').mockReturnValue(0)
     const { move, frames, blob } = setup()
     const curves = () => (blob().match(/C/g) ?? []).length // grows as the ribbon gets longer
@@ -175,11 +175,10 @@ describe('useSmoothMouse liquid', () => {
     for (let i = 0; i < 18; i++) frames(1, LATER + 288 + i * 16)
     expect(curves()).toBeGreaterThan(early) // still being drawn
 
-    move(300) // a real move hands the page back to the pointer
+    const mid = curves()
+    move(300) // a real move no longer cuts the swipe short
     for (let i = 0; i < 18; i++) frames(1, LATER + 576 + i * 16)
-    const after = curves()
-    frames(1, LATER + 576 + 18 * 16)
-    expect(curves()).toBeLessThanOrEqual(after) // nothing new is added
+    expect(curves()).toBeGreaterThan(mid)
   })
 
   it('does not swipe while locked', () => {
@@ -189,15 +188,14 @@ describe('useSmoothMouse liquid', () => {
     expect(blob()).toBe(HIDDEN)
   })
 
-  it('hands over to the real pointer when it moves mid-swipe', () => {
+  it('keeps the swipe going when the pointer moves mid-swipe', () => {
     vi.spyOn(Math, 'random').mockReturnValue(0)
     const { move, frames, blob } = setup()
     frames(1, LATER)
     frames(1, LATER + 800)
-    expect(blob()).toMatch(/^path\(/)
     move(50)
-    frames(60, performance.now() + 300) // pointer stopped 300 ms ago, not idle yet
-    expect(blob()).toBe(HIDDEN) // ghost gone, nothing left once the pointer stops again
+    frames(1, LATER + 900)
+    expect(blob()).toMatch(/^path\(/) // the ghost trail is still being drawn
   })
 
   it('stays put and keeps wobbling while locked', () => {
