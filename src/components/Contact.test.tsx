@@ -25,6 +25,18 @@ it('links each social to its profile and opens it safely in a new tab', () => {
   }
 })
 
+it('offers the CV in English and Indonesian as downloads', () => {
+  render(<Contact />)
+  expect(screen.getByRole('link', { name: 'CV (English)' })).toHaveAttribute(
+    'href',
+    '/cv/Jovanic-Adriel-Harjanto-CV-EN.docx',
+  )
+  expect(screen.getByRole('link', { name: 'CV (Indonesia)' })).toHaveAttribute(
+    'href',
+    '/cv/Jovanic-Adriel-Harjanto-CV-ID.docx',
+  )
+})
+
 it('shows the email as a mailto link', () => {
   render(<Contact />)
   const link = screen.getByRole('link', { name: 'adrielharjanto@gmail.com' })

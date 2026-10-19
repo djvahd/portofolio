@@ -44,6 +44,19 @@ export function Contact() {
             </li>
           ))}
         </ul>
+        <ul className="mt-6 flex flex-wrap gap-x-8 gap-y-3 text-lg">
+          {profile.cv.map((c) => (
+            <li key={c.label}>
+              <a
+                href={c.url}
+                download
+                className="underline decoration-line underline-offset-4 transition-colors hover:decoration-fg"
+              >
+                {c.label}
+              </a>
+            </li>
+          ))}
+        </ul>
         <p className="mt-24 text-sm text-muted">
           © {new Date().getFullYear()} {profile.name}
         </p>

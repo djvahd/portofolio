@@ -12,7 +12,7 @@ export const projects: Project[] = [
   {
     slug: 'arsipia',
     title: 'Arsipia',
-    role: 'Developer & Designer',
+    role: 'Developer, team of 3',
     year: '2026',
     description:
       'An automation layer on top of Google Drive that tidies files and keeps knowledge with the team when people change, for offices, startups, communities, and campuses.',
@@ -22,7 +22,7 @@ export const projects: Project[] = [
   {
     slug: 'smart-odong',
     title: 'Smart Odong Campus System',
-    role: 'Developer & Designer',
+    role: 'Developer, team of 3',
     year: '2026',
     description:
       'A smart campus shuttle app with live shuttle status, passenger load, stops, and ride history.',
@@ -35,14 +35,14 @@ export const projects: Project[] = [
     role: 'Developer & Designer',
     year: '2026',
     description:
-      'A web photobooth built for the Rewind Forum OSIS Jawa Tengah 2026 event, with every photo uploaded automatically.',
+      'A web photobooth for a client event, with every photo uploaded automatically.',
     image: '/images/projects/photobooth.webp',
     liveUrl: 'https://photobooth-webapp.netlify.app/',
   },
   {
     slug: 'harmoni-clothing',
     title: 'Harmoni Clothing',
-    role: 'Developer & Designer',
+    role: 'Developer & Designer, demo stage',
     year: '2026',
     description:
       'A modern clothing platform for creators, brands, and communities: custom design with no minimum order.',

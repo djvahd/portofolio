@@ -27,6 +27,14 @@ describe('profile', () => {
   })
 })
 
+describe('cv downloads', () => {
+  it('points at files that exist in public/cv', () => {
+    for (const c of profile.cv) {
+      expect(existsSync(`public${c.url}`)).toBe(true)
+    }
+  })
+})
+
 describe('projects', () => {
   it('contains exactly the four projects in order', () => {
     expect(projects.map((p) => p.slug)).toEqual([
