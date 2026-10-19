@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react'
-import { easeInOut, motion, useTransform, type MotionValue } from 'framer-motion'
+import { useEffect, useState, type RefObject } from 'react'
+import { easeInOut, motion, useTransform, type MotionStyle, type MotionValue } from 'framer-motion'
 import type { Theme } from '../hooks/useTheme'
 
 // Placeholder scribble (1180 x 775, the proportions of a big signature): swap this path for
@@ -18,16 +18,29 @@ const END_PHOTO_H = 1.18 // portrait is a bit larger than the box, so its lower 
  * as the full screen and ends as a 4:3 box in the middle; the portrait starts to the right
  * (exactly where the hero draws it) and ends centred, head at the top, chest cropped.
  */
-export function useHeroGeometry(progress: MotionValue<number>) {
-  const read = () => ({ w: document.documentElement.clientWidth, h: window.innerHeight })
+export function useHeroGeometry(
+  progress: MotionValue<number>,
+  stageRef?: RefObject<HTMLElement | null>,
+) {
+  // Measure the stage itself when given: on phones its 100svh differs from innerHeight and vh,
+  // and the box, the portrait and the running text must all agree on one height.
+  const read = () => {
+    const stage = stageRef?.current
+    return stage?.clientHeight
+      ? { w: stage.clientWidth, h: stage.clientHeight }
+      : { w: document.documentElement.clientWidth, h: window.innerHeight }
+  }
   const [size, setSize] = useState(read)
   useEffect(() => {
-    const onResize = () => setSize(read())
+    const onResize = () => {
+      const next = read()
+      setSize((prev) => (prev.w === next.w && prev.h === next.h ? prev : next))
+    }
     onResize() // the scrollbar may have appeared since the first render
     window.addEventListener('resize', onResize)
     // The page's own width changes when the scrollbar shows up or goes away
     const observer = typeof ResizeObserver === 'undefined' ? null : new ResizeObserver(onResize)
-    observer?.observe(document.documentElement)
+    observer?.observe(stageRef?.current ?? document.documentElement)
     return () => {
       window.removeEventListener('resize', onResize)
       observer?.disconnect()
@@ -54,6 +67,7 @@ export function useHeroGeometry(progress: MotionValue<number>) {
   const range = [0, 0.45]
   const opts = { ease: easeInOut }
   return {
+    boxH: endH, // the final box's height in px, so the running text can clear it
     // Where the portrait starts, for layers that must line up with it (the lens's wireframe)
     start: {
       left: `${startLeftPct}%`,
@@ -71,7 +85,15 @@ export function useHeroGeometry(progress: MotionValue<number>) {
 }
 
 /** The inverted-theme backdrop with the running text, fading in behind the shrinking hero. */
-export function StageBackdrop({ progress, theme }: { progress: MotionValue<number>; theme: Theme }) {
+export function StageBackdrop({
+  progress,
+  theme,
+  boxH,
+}: {
+  progress: MotionValue<number>
+  theme: Theme
+  boxH: number
+}) {
   const opacity = useTransform(progress, [0.12, 0.38], [0, 1])
   const textOpacity = useTransform(progress, [0.3, 0.5], [0, 1])
   // Sized by the shorter of width and height, so both rows always fit on screen
@@ -87,9 +109,9 @@ export function StageBackdrop({ progress, theme }: { progress: MotionValue<numbe
       className="absolute inset-0 z-[1] overflow-hidden bg-bg text-fg"
     >
       <motion.div
-        style={{ opacity: textOpacity }}
+        style={{ opacity: textOpacity, '--box-h': `${boxH}px` } as MotionStyle}
         // Held upright, the box covers most of the width: one row rides above it, one below
-        className="absolute inset-x-0 top-1/2 flex -translate-y-1/2 select-none flex-col leading-[0.92] portrait:gap-[calc(38vh+1.5rem)]"
+        className="absolute inset-x-0 top-1/2 flex -translate-y-1/2 select-none flex-col leading-[0.92] portrait:gap-[calc(var(--box-h)+1.5rem)]"
       >
         {/* Two copies per row, so sliding by half a row loops seamlessly and never stops */}
         <div className={`${row} marquee-left font-display font-light text-muted`}>

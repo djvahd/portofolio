@@ -62,7 +62,7 @@ export function Hero({ theme = 'light' }: { theme?: Theme }) {
   const { scrollYProgress } = useScroll({ target: trackRef, offset: ['start start', 'end end'] })
   const progress = reduce ? still : scrollYProgress
 
-  const geo = useHeroGeometry(progress)
+  const geo = useHeroGeometry(progress, stageRef)
   const radius = useTransform(progress, [0, 0.45], [0, 28], { ease: easeInOut })
   const textOpacity = useTransform(progress, [0.02, 0.2], [1, 0])
   const textY = useTransform(progress, [0.02, 0.2], [0, -60])
@@ -81,12 +81,9 @@ export function Hero({ theme = 'light' }: { theme?: Theme }) {
       aria-label="Introduction"
       className={reduce ? 'relative h-screen' : 'relative h-[170vh]'}
     >
-      {/* svh: on phones the visible screen is shorter than vh while the address bar shows */}
-      <div
-        ref={stageRef}
-        className="sticky top-0 h-screen overflow-hidden supports-[height:100svh]:h-[100svh]"
-      >
-        {!reduce && <StageBackdrop progress={progress} theme={inverse} />}
+      {/* vh, not svh: svh leaves a gap at the bottom once the phone's address bar slides away */}
+      <div ref={stageRef} className="sticky top-0 h-screen overflow-hidden">
+        {!reduce && <StageBackdrop progress={progress} theme={inverse} boxH={geo.boxH} />}
 
         <motion.div
           style={{
