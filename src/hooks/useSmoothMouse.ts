@@ -13,7 +13,8 @@ const GHOST_SEGMENT_MS = 380
 const GHOST_GAP_MIN = 2500
 const GHOST_GAP_RANGE = 2500
 const SCROLL_PAUSE_MS = 800 // no swipe starts this soon after the page last scrolled
-const JITTER_PX = 4 // pointer or scroll movement below this is noise and never cancels a swipe
+const JITTER_PX = 4 // scroll movement below this is noise and never cancels a swipe
+const POINTER_MIN_PX = 20 // the pointer must travel this far before the blob answers it
 const TRAIL_MS = 1300 // how long a piece of the ghost's trail lives
 const TRAIL_SPACING = 28 // px between the points a trail's outline is built from
 
@@ -208,7 +209,7 @@ export function useSmoothMouse(
       // A "still" mouse still twitches, and browsers re-send moves after layout changes
       if (
         lastPointer &&
-        Math.hypot(e.clientX - lastPointer[0], e.clientY - lastPointer[1]) < JITTER_PX
+        Math.hypot(e.clientX - lastPointer[0], e.clientY - lastPointer[1]) < POINTER_MIN_PX
       ) {
         return
       }
@@ -240,7 +241,7 @@ export function useSmoothMouse(
       // Hover: the blob swells up while the pointer moves, and melts away slowly once it stops.
       // Locked, it stays put where it was left.
       const wanted = seeded && (isLocked || (real && moving))
-      presence = ease(presence, wanted ? 1 : 0, wanted ? 0.3 : MELT)
+      presence = ease(presence, wanted ? 1 : 0, wanted ? 0.1 : MELT)
 
       // The ghost pointer: a fast diagonal zig-zag swipe now and then while nobody is hovering
       const atRest = window.scrollY < 24 && now - lastScroll > SCROLL_PAUSE_MS
