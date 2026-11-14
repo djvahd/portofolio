@@ -3,7 +3,6 @@ import { Contact } from './components/Contact'
 import { Hero } from './components/Hero'
 import { Leadership } from './components/Leadership'
 import { Nav } from './components/Nav'
-import { Preloader } from './components/Preloader'
 import { Projects } from './components/Projects'
 import { ScrollProgress } from './components/ScrollProgress'
 import { useTheme } from './hooks/useTheme'
@@ -18,7 +17,6 @@ export default function App() {
       >
         Skip to content
       </a>
-      <Preloader />
       <ScrollProgress />
       <Nav theme={theme} onToggle={toggle} />
       <main id="main">
