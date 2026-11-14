@@ -6,9 +6,10 @@ import { ThemeToggle } from './ThemeToggle'
 const BAR_HEIGHT = 64
 const TOGGLE_CLASS =
   'rounded-full border border-current px-4 py-1.5 text-sm font-medium capitalize'
+const CTA_CLASS = 'rounded-full bg-fg px-4 py-1.5 text-sm font-medium text-bg'
 
 /**
- * Just the name and the theme switch. Their colours follow the theme of whatever is behind them:
+ * The name, the call to action and the theme switch. Their colours follow the theme of whatever is behind them:
  * the hero's theme first, the opposite theme once the hero scroll has flipped it. From the
  * "Selected work" section on, the header becomes a semi-transparent bar.
  */
@@ -59,7 +60,12 @@ export function Nav({ theme, onToggle }: { theme: Theme; onToggle: () => void })
           <a href="#top" className="font-display text-lg font-semibold">
             {profile.name}
           </a>
-          <ThemeToggle theme={theme} onToggle={onToggle} shows={behind} />
+          <div className="flex items-center gap-2">
+            <a href={profile.cta.href} className={CTA_CLASS}>
+              {profile.cta.short}
+            </a>
+            <ThemeToggle theme={theme} onToggle={onToggle} shows={behind} />
+          </div>
         </div>
       </header>
 
@@ -73,7 +79,10 @@ export function Nav({ theme, onToggle }: { theme: Theme; onToggle: () => void })
         >
           <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
             <span className="font-display text-lg font-semibold">{profile.name}</span>
-            <span className={TOGGLE_CLASS}>{behind}</span>
+            <span className="flex items-center gap-2">
+              <span className={CTA_CLASS}>{profile.cta.short}</span>
+              <span className={TOGGLE_CLASS}>{behind}</span>
+            </span>
           </div>
         </div>
       )}

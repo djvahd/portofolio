@@ -52,7 +52,13 @@ export function useHeroGeometry(
   const upright = size.h > size.w
   const baseH = upright ? 0.62 : 0.88 // portrait height as a share of the panel
   const maxW = upright ? 0.92 : 0.6 // ...and its widest, as a share of the screen's width
-  const startPhotoW = Math.min(baseH * size.h * PHOTO_ASPECT, maxW * size.w)
+  // Upright, the portrait's top stays below the words and the call to action (short phones, tablets)
+  const minTop = upright ? Math.max(340, 0.42 * size.h) : 0
+  const startPhotoW = Math.min(
+    baseH * size.h * PHOTO_ASPECT,
+    maxW * size.w,
+    (size.h - minTop) * PHOTO_ASPECT,
+  )
   const startH = startPhotoW / PHOTO_ASPECT / size.h
   const startLeft = upright ? (1 - startPhotoW / size.w) / 2 : 1 - 0.08 - startPhotoW / size.w
   const startLeftPct = startLeft * 100

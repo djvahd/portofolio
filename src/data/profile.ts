@@ -6,8 +6,9 @@ export interface Social {
 export const profile: {
   name: string
   fullName: string
-  tagline: string
   roles: { base: string; reveal: string }
+  offer: string
+  cta: { label: string; short: string; href: string }
   about: string
   skills: { dev: string[]; design: string[] }
   email: string | null
@@ -16,8 +17,9 @@ export const profile: {
 } = {
   name: 'Adriel',
   fullName: 'Jovanic Adriel Harjanto',
-  tagline: 'This is Me',
   roles: { base: 'Developer', reveal: 'Designer' },
+  offer: 'Fast websites that bring small businesses more enquiries.',
+  cta: { label: 'Get a free homepage mock-up', short: 'Free mock-up', href: '#contact' },
   about:
     'Computer science student at Universitas Padjadjaran. I build products and lead the teams behind them: full-stack web, with design and multimedia on the side.',
   skills: {
