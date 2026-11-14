@@ -1,9 +1,10 @@
 import { render, screen } from '@testing-library/react'
 import { Projects } from './Projects'
 
-it('renders all four projects', () => {
+it('renders every project, earlier work under Other work', () => {
   render(<Projects />)
-  expect(screen.getAllByRole('article')).toHaveLength(4)
+  expect(screen.getAllByRole('article')).toHaveLength(3)
+  expect(screen.getByRole('heading', { level: 3, name: 'Other work' })).toBeInTheDocument()
 })
 
 it('lays the cards out two per row from the md breakpoint up', () => {

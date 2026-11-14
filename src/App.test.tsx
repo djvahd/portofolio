@@ -15,11 +15,10 @@ it('renders every section in order', () => {
     'Selected work',
     'Packages & prices',
     'How it works',
-    'Leadership & recognition',
     'About',
     'Contact',
   ])
-  expect(screen.getAllByRole('article')).toHaveLength(4)
+  expect(screen.getAllByRole('article')).toHaveLength(3)
 })
 
 it('keeps everything after the hero in the opposite theme', () => {

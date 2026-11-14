@@ -14,7 +14,9 @@ function CardBody({ project }: { project: Project }) {
       <div className="mt-5 flex items-start justify-between gap-6">
         <div>
           <h3 className="font-display text-2xl md:text-3xl">{project.title}</h3>
-          <p className="mt-1 text-sm text-muted">{`${project.role} · ${project.year}`}</p>
+          <p className="mt-1 text-sm text-muted">
+            {[project.role, project.year, project.note].filter(Boolean).join(' · ')}
+          </p>
           <p className="mt-3 max-w-xl text-muted">{project.description}</p>
         </div>
         {project.liveUrl ? (
