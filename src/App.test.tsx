@@ -9,7 +9,7 @@ beforeEach(() => {
 
 it('renders every section in order', () => {
   render(<App />)
-  expect(screen.getByRole('heading', { level: 1, name: 'Adriel' })).toBeInTheDocument()
+  expect(screen.getByRole('heading', { level: 1, name: /^Fast websites/ })).toBeInTheDocument()
   const h2s = screen.getAllByRole('heading', { level: 2 }).map((h) => h.textContent)
   expect(h2s).toEqual(['Selected work', 'Leadership & recognition', 'About', 'Contact'])
   expect(screen.getAllByRole('article')).toHaveLength(4)
@@ -22,6 +22,11 @@ it('keeps everything after the hero in the opposite theme', () => {
   expect(below).not.toBeNull()
   expect(below?.getAttribute('data-theme')).not.toBe(page)
   expect(below).toContainElement(screen.getByRole('heading', { name: 'Selected work' }))
+})
+
+it('offers the free mock-up from the header', () => {
+  render(<App />)
+  expect(screen.getByRole('link', { name: 'Free mock-up' })).toHaveAttribute('href', '#contact')
 })
 
 it('offers a skip link and a theme toggle', () => {

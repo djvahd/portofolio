@@ -15,31 +15,36 @@ import { ContourBackground } from './ContourBackground'
 import { Signature, StageBackdrop, useHeroGeometry } from './ScrollStage'
 
 function HeroText({ role, heading }: { role: string; heading: boolean }) {
-  const nameClass =
-    // Sized by the shorter of width and height, so the words fit short windows and phones on their side
-    'hero-name relative text-[clamp(2.5rem,min(15vw,24vh),12rem)] leading-[0.9] tracking-tight'
-  const name = (
-    <>
-      <span className="font-display font-light">{profile.name.slice(0, -2)}</span>
-      <span className="font-sans font-extrabold">{profile.name.slice(-2)}</span>
-    </>
-  )
+  const ctaClass =
+    'relative mt-6 inline-flex w-fit items-center rounded-full bg-fg px-6 py-3 text-base font-medium text-bg md:mt-8'
   return (
     // Held upright, the words sit at the top and leave the portrait below them clear
-    <div className="mx-auto flex h-full max-w-6xl flex-col justify-center px-6 pt-20 portrait:justify-start portrait:pt-28">
+    <div className="mx-auto flex h-full max-w-6xl flex-col justify-center px-6 pt-20 portrait:justify-start portrait:pt-24">
+      <p
+        aria-label={heading ? profile.name : undefined}
+        // Sized by the shorter of width and height, so the words fit short windows and phones on their side
+        className="hero-name relative text-[clamp(2.5rem,min(15vw,24vh),12rem)] leading-[0.9] tracking-tight"
+      >
+        <span className="font-display font-light">{profile.name.slice(0, -2)}</span>
+        <span className="font-sans font-extrabold">{profile.name.slice(-2)}</span>
+      </p>
+      <p className="relative mt-3 text-sm font-medium uppercase tracking-[0.2em] md:mt-4">{`Web ${role}`}</p>
       {heading ? (
-        <h1 aria-label={profile.name} className={nameClass}>
-          {name}
+        <h1 className="relative mt-3 max-w-[22ch] font-display text-[clamp(1.35rem,min(4vw,6.5vh),3rem)] italic leading-tight md:mt-5">
+          {profile.offer}
         </h1>
       ) : (
-        <div className={nameClass}>{name}</div>
+        <p className="relative mt-3 max-w-[22ch] font-display text-[clamp(1.35rem,min(4vw,6.5vh),3rem)] italic leading-tight md:mt-5">
+          {profile.offer}
+        </p>
       )}
-      <p className="relative mt-3 text-sm font-medium uppercase tracking-[0.2em] md:mt-4">
-        {profile.tagline}
-      </p>
-      <p className="relative mt-4 font-display text-[clamp(1rem,min(4vw,6.5vh),3rem)] italic md:mt-6">
-        {role}
-      </p>
+      {heading ? (
+        <a href={profile.cta.href} className={ctaClass}>
+          {profile.cta.label}
+        </a>
+      ) : (
+        <span className={ctaClass}>{profile.cta.label}</span>
+      )}
     </div>
   )
 }
