@@ -33,7 +33,11 @@ export function About() {
             className="aspect-[4/5] w-full rounded-2xl object-cover object-[50%_45%]"
           />
           <div>
-            <p className="max-w-xl text-lg leading-relaxed">{profile.about}</p>
+            {profile.about.map((p) => (
+              <p key={p} className="mb-4 max-w-xl text-lg leading-relaxed">
+                {p}
+              </p>
+            ))}
             <div className="mt-10 grid grid-cols-2 gap-8">
               <SkillList title="Dev" items={profile.skills.dev} />
               <SkillList title="Design" items={profile.skills.design} />

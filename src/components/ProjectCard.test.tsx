@@ -10,6 +10,8 @@ const base: Project = {
   description: 'A demo description.',
   image: '/images/projects/demo.webp',
   liveUrl: null,
+  kind: 'other',
+  note: null,
 }
 
 it('links out safely when a live URL exists', () => {
@@ -26,4 +28,9 @@ it('shows a coming-soon note and no link without a live URL', () => {
   expect(screen.getByText('Live link coming soon')).toBeInTheDocument()
   expect(screen.getByText('Demo Project')).toBeInTheDocument()
   expect(screen.getByText('Developer · 2026')).toBeInTheDocument()
+})
+
+it('adds the note to the role line', () => {
+  render(<ProjectCard project={{ ...base, note: 'Site in Indonesian' }} />)
+  expect(screen.getByText('Developer · 2026 · Site in Indonesian')).toBeInTheDocument()
 })

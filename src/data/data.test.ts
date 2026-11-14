@@ -7,7 +7,7 @@ describe('profile', () => {
     expect(profile.name).toBe('Adriel')
     expect(profile.offer.length).toBeGreaterThan(20)
     expect(profile.roles).toEqual({ base: 'Developer', reveal: 'Designer' })
-    expect(profile.about.length).toBeGreaterThan(20)
+    expect(profile.about.join(' ').length).toBeGreaterThan(20)
   })
 
   it('lists the three socials in order, with null or https urls', () => {
@@ -36,13 +36,13 @@ describe('cv downloads', () => {
 })
 
 describe('projects', () => {
-  it('contains exactly the four projects in order', () => {
-    expect(projects.map((p) => p.slug)).toEqual([
-      'arsipia',
-      'smart-odong',
-      'photobooth',
-      'harmoni-clothing',
-    ])
+  it('contains exactly these projects in order, with no Smart Odong', () => {
+    expect(projects.map((p) => p.slug)).toEqual(['arsipia', 'photobooth', 'harmoni-clothing'])
+  })
+
+  it('puts demos for businesses before other work', () => {
+    const kinds = projects.map((p) => p.kind)
+    expect(kinds).toEqual([...kinds].sort())
   })
 
   it('has complete fields and valid image/link shapes', () => {

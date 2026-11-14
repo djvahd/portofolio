@@ -1,7 +1,6 @@
 import { About } from './components/About'
 import { Contact } from './components/Contact'
 import { Hero } from './components/Hero'
-import { Leadership } from './components/Leadership'
 import { Nav } from './components/Nav'
 import { Process } from './components/Process'
 import { Projects } from './components/Projects'
@@ -30,7 +29,6 @@ export default function App() {
           <Services />
           <Process />
           <Testimonials />
-          <Leadership />
           <About />
           <Contact />
         </div>

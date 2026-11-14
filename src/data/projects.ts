@@ -6,6 +6,9 @@ export interface Project {
   description: string
   image: string
   liveUrl: string | null
+  /** 'demo' sites are built for clients like the visitor; 'other' is earlier work */
+  kind: 'demo' | 'other'
+  note: string | null
 }
 
 export const projects: Project[] = [
@@ -15,19 +18,11 @@ export const projects: Project[] = [
     role: 'Developer, team of 3',
     year: '2026',
     description:
-      'An automation layer on top of Google Drive that tidies files and keeps knowledge with the team when people change, for offices, startups, communities, and campuses.',
+      'Automation on top of Google Drive that keeps files tidy and keeps knowledge with the team when people leave. Built for offices, startups and campuses.',
     image: '/images/projects/arsipia.webp',
     liveUrl: 'https://arsipia.netlify.app/',
-  },
-  {
-    slug: 'smart-odong',
-    title: 'Smart Odong Campus System',
-    role: 'Developer, team of 3',
-    year: '2026',
-    description:
-      'A smart campus shuttle app with live shuttle status, passenger load, stops, and ride history.',
-    image: '/images/projects/smart-odong.webp',
-    liveUrl: null,
+    kind: 'other',
+    note: 'Site in Indonesian',
   },
   {
     slug: 'photobooth',
@@ -35,9 +30,11 @@ export const projects: Project[] = [
     role: 'Developer & Designer',
     year: '2026',
     description:
-      'A web photobooth for a client event, with every photo uploaded automatically.',
+      "A browser photobooth for a client's event. Guests take their photos on the spot and every photo uploads automatically.",
     image: '/images/projects/photobooth.webp',
     liveUrl: 'https://photobooth-webapp.netlify.app/',
+    kind: 'other',
+    note: 'Site in Indonesian',
   },
   {
     slug: 'harmoni-clothing',
@@ -45,8 +42,10 @@ export const projects: Project[] = [
     role: 'Developer & Designer, demo stage',
     year: '2026',
     description:
-      'A modern clothing platform for creators, brands, and communities: custom design with no minimum order.',
+      'An online store for custom clothing with no minimum order, for creators, brands and communities.',
     image: '/images/projects/harmoni-clothing.webp',
     liveUrl: 'https://harmoniclothing.com/',
+    kind: 'other',
+    note: 'Site in Indonesian',
   },
 ]

@@ -9,7 +9,7 @@ export const profile: {
   roles: { base: string; reveal: string }
   offer: string
   cta: { label: string; short: string; href: string }
-  about: string
+  about: string[]
   location: string
   skills: { dev: string[]; design: string[] }
   email: string | null
@@ -23,8 +23,10 @@ export const profile: {
   roles: { base: 'Developer', reveal: 'Designer' },
   offer: 'Fast websites that bring small businesses more enquiries.',
   cta: { label: 'Get a free homepage mock-up', short: 'Free mock-up', href: '#contact' },
-  about:
-    'Computer science student at Universitas Padjadjaran. I build products and lead the teams behind them: full-stack web, with design and multimedia on the side.',
+  about: [
+    "I'm Adriel, a web developer and designer studying computer science at Universitas Padjadjaran in Indonesia. I build fast, mobile-first websites for small businesses: clear about what you offer, easy to contact you from, and quick to load on a phone.",
+    "I've also led a 45-person student council and a 40-person city student forum, so I'm used to deadlines and keeping people updated. The full story is in my CV.",
+  ],
   location: 'Based in Indonesia, GMT+7: 1 hour behind Perth and Singapore.',
   skills: {
     dev: [
