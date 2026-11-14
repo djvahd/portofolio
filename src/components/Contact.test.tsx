@@ -37,9 +37,15 @@ it('offers the CV in English and Indonesian as downloads', () => {
   )
 })
 
-it('shows the email as a mailto link', () => {
+it('shows the email as a mailto link next to the form', () => {
   render(<Contact />)
   const link = screen.getByRole('link', { name: 'adrielharjanto@gmail.com' })
   expect(link).toHaveAttribute('href', 'mailto:adrielharjanto@gmail.com')
   expect(screen.queryByText('Email coming soon')).toBeNull()
+})
+
+it('shows the enquiry form and the time zone', () => {
+  render(<Contact />)
+  expect(screen.getByRole('button', { name: 'Send enquiry' })).toBeInTheDocument()
+  expect(screen.getByText(/GMT\+7/)).toBeInTheDocument()
 })

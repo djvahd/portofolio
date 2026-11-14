@@ -13,6 +13,8 @@ export const profile: {
   location: string
   skills: { dev: string[]; design: string[] }
   email: string | null
+  formEndpoint: string | null
+  bookingUrl: string | null
   socials: Social[]
   cv: { label: string; url: string }[]
 } = {
@@ -42,6 +44,10 @@ export const profile: {
     ],
   },
   email: 'adrielharjanto@gmail.com',
+  // A Formspree-style endpoint (POST, JSON reply). While null the form opens a prefilled email.
+  formEndpoint: null,
+  // e.g. a Calendly or Cal.com link; the "book a call" link shows once this is set
+  bookingUrl: null,
   socials: [
     { label: 'GitHub', url: 'https://github.com/djvahd' },
     { label: 'LinkedIn', url: 'https://www.linkedin.com/in/jovanicadrielharjanto/' },
