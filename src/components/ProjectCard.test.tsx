@@ -12,6 +12,7 @@ const base: Project = {
   liveUrl: null,
   kind: 'other',
   note: null,
+  caseStudy: null,
 }
 
 it('links out safely when a live URL exists', () => {
@@ -33,4 +34,15 @@ it('shows a coming-soon note and no link without a live URL', () => {
 it('adds the note to the role line', () => {
   render(<ProjectCard project={{ ...base, note: 'Site in Indonesian' }} />)
   expect(screen.getByText('Developer · 2026 · Site in Indonesian')).toBeInTheDocument()
+})
+
+it('shows the case study when there is one', () => {
+  render(
+    <ProjectCard
+      project={{ ...base, caseStudy: { problem: 'Slow site.', built: 'A fast one.', result: '1 s.' } }}
+    />,
+  )
+  for (const t of ['Problem', 'What I built', 'Result', 'Slow site.', 'A fast one.', '1 s.']) {
+    expect(screen.getByText(t)).toBeInTheDocument()
+  }
 })

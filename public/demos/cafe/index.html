@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Saltbush Cafe, Marrickville | Demo site by Adriel</title>
+<meta name="description" content="Demo website for a fictional cafe in Sydney, with menu and table bookings. Built by Adriel.">
+<meta name="robots" content="noindex">
+<style>
+:root{--ink:#2b2a22;--muted:#6b675a;--bg:#f6f1e7;--card:#fffdf8;--line:#e4dccb;--olive:#55613a;--olive-dark:#434d2d;--clay:#b8582f;--radius:14px}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font:17px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--ink);background:var(--bg);padding-bottom:72px}
+a{color:inherit}
+.serif,h1,h2,h3,.logo{font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+.demo{margin:0;background:var(--olive-dark);color:#eef0e4;font-size:13px;text-align:center;padding:8px 12px}
+.demo a{color:#fff;font-weight:600}
+header{background:var(--bg);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:10}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:64px}
+.logo{font-size:24px;text-decoration:none;font-style:italic}
+nav{display:none;gap:24px;font-size:15px}
+nav a{text-decoration:none;color:var(--muted)}
+nav a:hover{color:var(--ink)}
+.btn{display:inline-flex;align-items:center;justify-content:center;border-radius:999px;padding:12px 22px;font-weight:600;text-decoration:none;background:var(--olive);color:#fff;border:2px solid var(--olive);font-size:16px;cursor:pointer}
+.btn:hover{background:var(--olive-dark);border-color:var(--olive-dark)}
+.btn.ghost{background:transparent;color:var(--olive)}
+.btn.small{padding:8px 16px;font-size:15px}
+.hero{padding:44px 0 56px}
+.open{display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:600;color:var(--olive);margin:0}
+.open::before{content:"";width:9px;height:9px;border-radius:50%;background:#4f9d4a}
+h1{font-size:clamp(38px,8vw,64px);line-height:1.04;margin:12px 0 16px;font-weight:600}
+h1 em{color:var(--clay)}
+h2{font-size:clamp(30px,5vw,44px);line-height:1.1;margin:0 0 12px;font-weight:600}
+h3{font-size:22px;margin:0 0 4px;font-weight:600}
+.lead{font-size:19px;color:var(--muted);max-width:32em;margin:0 0 28px}
+.actions{display:flex;flex-wrap:wrap;gap:12px}
+.plate{margin-top:36px;aspect-ratio:4/3;border-radius:var(--radius);background:
+  radial-gradient(circle at 30% 40%,#f2c14e 0 9%,transparent 9.5%),
+  radial-gradient(circle at 30% 40%,#fff 0 15%,transparent 15.5%),
+  radial-gradient(circle at 62% 55%,#7a9a4a 0 7%,transparent 7.5%),
+  radial-gradient(circle at 70% 46%,#c0392b 0 4%,transparent 4.5%),
+  radial-gradient(circle at 50% 50%,#d9a066 0 30%,transparent 30.5%),
+  radial-gradient(circle at 50% 50%,#fffdf8 0 40%,#e8dfcc 40.5% 41.5%,transparent 42%),
+  linear-gradient(135deg,#8c6a4f,#6e523c);display:grid;place-items:end start;padding:14px}
+.plate span{background:rgba(43,42,34,.7);color:#fff;font-size:13px;padding:4px 10px;border-radius:999px}
+section{padding:56px 0}
+.sub{color:var(--muted);margin:0 0 32px;max-width:40em}
+.menu{display:grid;gap:28px}
+.menu h3{border-bottom:2px solid var(--ink);padding-bottom:6px;margin-bottom:12px}
+.menu dl{margin:0}
+.item{display:flex;justify-content:space-between;gap:16px;padding:10px 0;border-bottom:1px dashed var(--line)}
+.item dt{font-weight:600}
+.item dd{margin:0;font-weight:600;white-space:nowrap}
+.item small{display:block;font-weight:400;color:var(--muted);font-size:15px}
+.tags{font-size:13px;color:var(--olive);font-weight:600}
+.cater{background:var(--olive);color:#fff;border-radius:var(--radius);padding:28px}
+.cater p{color:#e4e8d6;margin:0 0 20px}
+.cater .btn{background:#fff;color:var(--olive);border-color:#fff}
+.book{background:var(--card);border-block:1px solid var(--line)}
+form{display:grid;gap:16px}
+label{display:grid;gap:6px;font-weight:600;font-size:15px}
+input,select,textarea{font:inherit;font-weight:400;padding:12px 14px;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--ink);width:100%}
+input:focus,select:focus,textarea:focus{outline:3px solid #dfe5cc;border-color:var(--olive)}
+.fine{font-size:13px;color:var(--muted);margin:0}
+.thanks{border:1px solid var(--line);border-radius:var(--radius);padding:28px;background:#fff}
+.info{display:grid;gap:28px}
+table{border-collapse:collapse;width:100%;max-width:420px}
+td{padding:6px 0;border-bottom:1px solid var(--line)}
+td:last-child{text-align:right}
+footer{padding:32px 0;color:var(--muted);font-size:14px;border-top:1px solid var(--line)}
+.sticky{position:fixed;left:0;right:0;bottom:0;display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:10px 12px;background:var(--card);border-top:1px solid var(--line);z-index:20}
+.sticky .btn{padding:12px}
+@media(min-width:720px){
+  body{padding-bottom:0}
+  .sticky{display:none}
+  nav{display:flex}
+  .hero .wrap{display:grid;grid-template-columns:1.1fr 1fr;gap:48px;align-items:center}
+  .plate{margin-top:0}
+  .menu{grid-template-columns:repeat(3,1fr)}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+  .split{display:grid;grid-template-columns:1fr 1.2fr;gap:48px;align-items:start}
+  .info{grid-template-columns:1fr 1fr}
+  .hero{padding:72px 0 80px}
+  section{padding:80px 0}
+}
+</style>
+</head>
+<body>
+<p class="demo">Demo website by Adriel for a fictional cafe. Nothing here is real and forms send nothing. <a href="/">Back to portfolio</a></p>
+
+<header>
+  <div class="wrap bar">
+    <a class="logo" href="#top">Saltbush</a>
+    <nav aria-label="Main">
+      <a href="#menu">Menu</a>
+      <a href="#catering">Catering</a>
+      <a href="#visit">Hours &amp; location</a>
+    </nav>
+    <a class="btn small" href="#book">Book a table</a>
+  </div>
+</header>
+
+<main id="top">
+  <div class="hero">
+    <div class="wrap">
+      <div>
+        <p class="open">Open 7 days for breakfast and lunch</p>
+        <h1>Good coffee, <em>slow</em> brunch, Marrickville.</h1>
+        <p class="lead">Seasonal breakfast and lunch, single-origin coffee, and a sunny courtyard. Dogs welcome outside.</p>
+        <div class="actions">
+          <a class="btn" href="#book">Book a table</a>
+          <a class="btn ghost" href="#menu">See the menu</a>
+        </div>
+      </div>
+      <div class="plate" role="img" aria-label="Illustration of a brunch plate"><span>Brunch, served until 2:30pm</span></div>
+    </div>
+  </div>
+
+  <section id="menu" class="book">
+    <div class="wrap">
+      <h2>Menu</h2>
+      <p class="sub">A sample of the menu. <span class="tags">V</span> vegetarian, <span class="tags">VG</span> vegan, <span class="tags">GF</span> gluten-free option.</p>
+      <div class="menu">
+        <div>
+          <h3>Breakfast</h3>
+          <dl>
+            <div class="item"><dt>Smashed avo on sourdough<small>Feta, lemon, chilli, seeds <span class="tags">V GF</span></small></dt><dd>$19</dd></div>
+            <div class="item"><dt>Big brekkie<small>Eggs your way, bacon, mushrooms, hash brown</small></dt><dd>$26</dd></div>
+            <div class="item"><dt>Ricotta hotcakes<small>Berries, maple, mascarpone <span class="tags">V</span></small></dt><dd>$21</dd></div>
+            <div class="item"><dt>Bircher bowl<small>Oats, apple, coconut yoghurt <span class="tags">VG</span></small></dt><dd>$15</dd></div>
+          </dl>
+        </div>
+        <div>
+          <h3>Lunch</h3>
+          <dl>
+            <div class="item"><dt>Chicken schnitzel burger<small>Slaw, pickles, chips</small></dt><dd>$24</dd></div>
+            <div class="item"><dt>Roast pumpkin salad<small>Freekeh, pepitas, tahini <span class="tags">VG GF</span></small></dt><dd>$20</dd></div>
+            <div class="item"><dt>Fish tacos<small>Two tacos, lime crema</small></dt><dd>$23</dd></div>
+            <div class="item"><dt>Toastie of the day<small>Ask at the counter <span class="tags">V</span></small></dt><dd>$13</dd></div>
+          </dl>
+        </div>
+        <div>
+          <h3>Coffee &amp; drinks</h3>
+          <dl>
+            <div class="item"><dt>Espresso, long black<small>House blend or single origin</small></dt><dd>$4.50</dd></div>
+            <div class="item"><dt>Flat white, latte, cappuccino<small>Oat, soy or almond +$0.80</small></dt><dd>$5.20</dd></div>
+            <div class="item"><dt>Cold brew<small>Over ice, 18-hour steep</small></dt><dd>$6.50</dd></div>
+            <div class="item"><dt>Fresh juice<small>Orange, or apple, ginger and mint</small></dt><dd>$8</dd></div>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="catering">
+    <div class="wrap">
+      <div class="cater">
+        <h2>Catering for offices and events</h2>
+        <p>Breakfast platters, sandwiches and coffee for 10 to 80 people, delivered across the Inner West from 7am. Order by 2pm the day before.</p>
+        <a class="btn" href="#book">Ask about catering</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="book" class="book">
+    <div class="wrap split">
+      <div>
+        <h2>Book a table</h2>
+        <p class="sub">We keep half the cafe for walk-ins. For groups of 7 or more, or catering, add a note and we'll be in touch.</p>
+      </div>
+      <div>
+        <form id="table-form">
+          <div class="row">
+            <label>Name<input name="name" autocomplete="name" required></label>
+            <label>Mobile<input name="phone" type="tel" autocomplete="tel" required placeholder="04xx xxx xxx"></label>
+          </div>
+          <div class="row3">
+            <label>Date<input name="date" type="date" required></label>
+            <label>Time
+              <select name="time" required>
+                <option value="">Choose</option>
+                <option>7:00am</option><option>8:00am</option><option>9:00am</option><option>10:00am</option><option>11:00am</option><option>12:00pm</option><option>1:00pm</option><option>2:00pm</option>
+              </select>
+            </label>
+            <label>Guests
+              <select name="guests"><option>1</option><option selected>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7 or more</option></select>
+            </label>
+          </div>
+          <label>Notes (optional)<textarea name="notes" rows="3" placeholder="High chair, outdoor table with a dog, catering order..."></textarea></label>
+          <button class="btn" type="submit">Request booking</button>
+          <p class="fine">Demo form: nothing is sent or stored.</p>
+        </form>
+        <div class="thanks" id="thanks" hidden tabindex="-1">
+          <h3>Thanks, see you soon.</h3>
+          <p>On the real site the cafe gets the booking straight away and the guest receives a text to confirm. In this demo nothing was sent.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="visit">
+    <div class="wrap info">
+      <div>
+        <h2>Hours &amp; location</h2>
+        <p>88 Sample Street, Marrickville NSW<br>5 minutes' walk from Marrickville station.</p>
+        <p><a href="tel:+61255507314">(02) 5550 7314</a> · <a href="mailto:hello@example.com">hello@example.com</a></p>
+      </div>
+      <table>
+        <caption class="fine" style="text-align:left;margin-bottom:8px">Opening hours</caption>
+        <tr><td>Monday to Friday</td><td>6:30am to 3pm</td></tr>
+        <tr><td>Saturday &amp; Sunday</td><td>7:30am to 3pm</td></tr>
+        <tr><td>Public holidays</td><td>8am to 2pm</td></tr>
+      </table>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">© Saltbush Cafe, a fictional business. Demo website designed and built by <a href="/">Adriel</a>.</div>
+</footer>
+
+<div class="sticky">
+  <a class="btn ghost" href="#menu">Menu</a>
+  <a class="btn" href="#book">Book a table</a>
+</div>
+
+<script>
+document.getElementById('table-form').addEventListener('submit', function (e) {
+  e.preventDefault()
+  this.hidden = true
+  var t = document.getElementById('thanks')
+  t.hidden = false
+  t.focus()
+})
+</script>
+</body>
+</html>

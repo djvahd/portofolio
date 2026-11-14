@@ -9,9 +9,67 @@ export interface Project {
   /** 'demo' sites are built for clients like the visitor; 'other' is earlier work */
   kind: 'demo' | 'other'
   note: string | null
+  caseStudy: { problem: string; built: string; result: string } | null
 }
 
 export const projects: Project[] = [
+  {
+    slug: 'demo-physio',
+    title: 'Brightmove Physio',
+    role: 'Design & build',
+    year: '2026',
+    description: 'A booking-first website for a physiotherapy clinic in Perth.',
+    image: '/images/projects/demo-physio.webp',
+    liveUrl: '/demos/physio/',
+    kind: 'demo',
+    note: 'Demo, fictional clinic',
+    caseStudy: {
+      problem:
+        'Clinic sites often hide the phone number and make new patients call during work hours to book.',
+      built:
+        'One page with treatments and prices, health-fund details, the next free times, a one-minute booking request and a call button that stays on screen on phones.',
+      result:
+        'The whole page is under 5 KB to download, with no images, fonts or libraries to wait for.',
+    },
+  },
+  {
+    slug: 'demo-renovations',
+    title: 'Tallwood Renovations',
+    role: 'Design & build',
+    year: '2026',
+    description: 'A quote-request website for a kitchen and bathroom renovator in Brisbane.',
+    image: '/images/projects/demo-renovations.webp',
+    liveUrl: '/demos/renovations/',
+    kind: 'demo',
+    note: 'Demo, fictional builder',
+    caseStudy: {
+      problem:
+        'Homeowners contact three or four builders and go with the one that looks trustworthy and talks price first.',
+      built:
+        "Services with 'from' prices, a four-step process, recent jobs, service areas and a quote form that asks for suburb, job type and budget up front.",
+      result:
+        'Every quote request arrives with what the builder needs to price the job. The page is under 5 KB to download.',
+    },
+  },
+  {
+    slug: 'demo-cafe',
+    title: 'Saltbush Cafe',
+    role: 'Design & build',
+    year: '2026',
+    description: 'A menu and table-booking website for a neighbourhood cafe in Sydney.',
+    image: '/images/projects/demo-cafe.webp',
+    liveUrl: '/demos/cafe/',
+    kind: 'demo',
+    note: 'Demo, fictional cafe',
+    caseStudy: {
+      problem:
+        'Cafe menus are often a PDF or an Instagram photo that is hard to read on a phone and invisible to Google.',
+      built:
+        'The menu as real text with prices and dietary tags, a catering offer, table bookings, and opening hours on the first screen.',
+      result:
+        'Customers can read the menu and book a table in under a minute. The page is under 5 KB to download.',
+    },
+  },
   {
     slug: 'arsipia',
     title: 'Arsipia',
@@ -23,6 +81,7 @@ export const projects: Project[] = [
     liveUrl: 'https://arsipia.netlify.app/',
     kind: 'other',
     note: 'Site in Indonesian',
+    caseStudy: null,
   },
   {
     slug: 'photobooth',
@@ -35,6 +94,7 @@ export const projects: Project[] = [
     liveUrl: 'https://photobooth-webapp.netlify.app/',
     kind: 'other',
     note: 'Site in Indonesian',
+    caseStudy: null,
   },
   {
     slug: 'harmoni-clothing',
@@ -47,5 +107,6 @@ export const projects: Project[] = [
     liveUrl: 'https://harmoniclothing.com/',
     kind: 'other',
     note: 'Site in Indonesian',
+    caseStudy: null,
   },
 ]

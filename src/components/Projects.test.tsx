@@ -3,7 +3,8 @@ import { Projects } from './Projects'
 
 it('renders every project, earlier work under Other work', () => {
   render(<Projects />)
-  expect(screen.getAllByRole('article')).toHaveLength(3)
+  expect(screen.getAllByRole('article')).toHaveLength(6)
+  expect(screen.getByTestId('demo-grid').querySelectorAll('article')).toHaveLength(3)
   expect(screen.getByRole('heading', { level: 3, name: 'Other work' })).toBeInTheDocument()
 })
 
