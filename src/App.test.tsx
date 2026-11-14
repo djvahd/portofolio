@@ -11,7 +11,14 @@ it('renders every section in order', () => {
   render(<App />)
   expect(screen.getByRole('heading', { level: 1, name: /^Fast websites/ })).toBeInTheDocument()
   const h2s = screen.getAllByRole('heading', { level: 2 }).map((h) => h.textContent)
-  expect(h2s).toEqual(['Selected work', 'Leadership & recognition', 'About', 'Contact'])
+  expect(h2s).toEqual([
+    'Selected work',
+    'Packages & prices',
+    'How it works',
+    'Leadership & recognition',
+    'About',
+    'Contact',
+  ])
   expect(screen.getAllByRole('article')).toHaveLength(4)
 })
 

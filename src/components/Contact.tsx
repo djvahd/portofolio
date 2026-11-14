@@ -12,6 +12,7 @@ export function Contact() {
         <h2 id="contact-title" className="font-display text-4xl md:text-6xl">
           Contact
         </h2>
+        <p className="mt-4 text-lg text-muted">{profile.location}</p>
         <div className="mt-10">
           {profile.email ? (
             <a

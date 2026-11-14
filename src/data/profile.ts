@@ -10,6 +10,7 @@ export const profile: {
   offer: string
   cta: { label: string; short: string; href: string }
   about: string
+  location: string
   skills: { dev: string[]; design: string[] }
   email: string | null
   socials: Social[]
@@ -22,6 +23,7 @@ export const profile: {
   cta: { label: 'Get a free homepage mock-up', short: 'Free mock-up', href: '#contact' },
   about:
     'Computer science student at Universitas Padjadjaran. I build products and lead the teams behind them: full-stack web, with design and multimedia on the side.',
+  location: 'Based in Indonesia, GMT+7: 1 hour behind Perth and Singapore.',
   skills: {
     dev: [
       'Laravel & PHP',
