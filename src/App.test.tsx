@@ -18,7 +18,7 @@ it('renders every section in order', () => {
     'About',
     'Contact',
   ])
-  expect(screen.getAllByRole('article')).toHaveLength(3)
+  expect(screen.getAllByRole('article')).toHaveLength(6)
 })
 
 it('keeps everything after the hero in the opposite theme', () => {

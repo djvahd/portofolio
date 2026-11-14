@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tallwood Renovations, Brisbane | Demo site by Adriel</title>
+<meta name="description" content="Demo website for a fictional renovation company in Brisbane, with a free quote request form. Built by Adriel.">
+<meta name="robots" content="noindex">
+<style>
+:root{--ink:#16181d;--muted:#5b6170;--bg:#fff;--alt:#f4f4f1;--line:#e3e3df;--amber:#f5b301;--amber-dark:#d99c00;--dark:#16181d;--radius:10px}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font:17px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--ink);background:var(--bg);padding-bottom:72px}
+a{color:inherit}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+.demo{margin:0;background:var(--amber);color:var(--ink);font-size:13px;text-align:center;padding:8px 12px}
+.demo a{font-weight:700}
+header{background:var(--dark);color:#fff;position:sticky;top:0;z-index:10}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:64px}
+.logo{font-weight:900;font-size:19px;text-decoration:none;text-transform:uppercase;letter-spacing:.04em}
+.logo span{color:var(--amber)}
+nav{display:none;gap:24px;font-size:15px}
+nav a{text-decoration:none;color:#c9ccd3}
+nav a:hover{color:#fff}
+.btn{display:inline-flex;align-items:center;justify-content:center;border-radius:var(--radius);padding:14px 22px;font-weight:700;text-decoration:none;background:var(--amber);color:var(--ink);border:2px solid var(--amber);font-size:16px;cursor:pointer}
+.btn:hover{background:var(--amber-dark);border-color:var(--amber-dark)}
+.btn.line{background:transparent;color:#fff;border-color:#fff}
+.btn.line:hover{background:rgba(255,255,255,.1)}
+.btn.small{padding:8px 14px;font-size:15px}
+.hero{background:var(--dark);color:#fff;padding:40px 0 56px;position:relative;overflow:hidden}
+.hero .wrap{position:relative;z-index:1}
+.hero::after{content:"";position:absolute;right:-80px;bottom:-80px;width:320px;height:320px;border:40px solid var(--amber);opacity:.12;transform:rotate(12deg)}
+.eyebrow{font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--amber);margin:0}
+h1{font-size:clamp(34px,7.5vw,60px);line-height:1.05;letter-spacing:-.02em;margin:12px 0 16px;font-weight:900}
+h2{font-size:clamp(28px,5vw,42px);line-height:1.1;letter-spacing:-.02em;margin:0 0 12px;font-weight:900}
+h3{font-size:19px;margin:0 0 6px}
+.lead{font-size:19px;color:#c9ccd3;max-width:34em;margin:0 0 28px}
+.actions{display:flex;flex-wrap:wrap;gap:12px;position:relative;z-index:1}
+.facts{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;list-style:none;padding:0;margin:36px 0 0;max-width:560px}
+.facts li{border-left:3px solid var(--amber);padding-left:12px;font-size:14px;color:#c9ccd3}
+.facts b{display:block;font-size:24px;color:#fff;line-height:1.2}
+section{padding:56px 0}
+.alt{background:var(--alt)}
+.sub{color:var(--muted);margin:0 0 32px;max-width:40em}
+.grid{display:grid;gap:16px}
+.card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:22px}
+.card p{margin:0;color:var(--muted)}
+.from{display:block;margin-top:10px;font-weight:700}
+.job{padding:0;overflow:hidden}
+.pic{height:150px;display:grid;place-items:end start;padding:12px;font-size:13px;font-weight:700;color:#fff}
+.pic.k{background:linear-gradient(135deg,#3b3f47 0 50%,#c9a26b 50% 70%,#e9e4da 70%)}
+.pic.b{background:linear-gradient(160deg,#dfe7ea 0 40%,#9fb5bd 40% 62%,#2f3b40 62%)}
+.pic.d{background:linear-gradient(180deg,#9cc3e6 0 45%,#8a5a3b 45% 52%,#a8703f 52% 60%,#8a5a3b 60% 67%,#5f7f45 67%)}
+.pic span{background:rgba(0,0,0,.55);padding:3px 8px;border-radius:6px}
+.job div{padding:18px 20px}
+.steps{counter-reset:s;list-style:none;padding:0;margin:0}
+.steps li{counter-increment:s;position:relative;padding:0 0 22px 56px}
+.steps li::before{content:counter(s);position:absolute;left:0;top:0;width:40px;height:40px;border-radius:50%;background:var(--amber);font-weight:900;display:grid;place-items:center}
+.steps p{margin:0;color:var(--muted)}
+.quote{background:var(--dark);color:#fff}
+.quote .sub{color:#c9ccd3}
+form{background:#fff;color:var(--ink);border-radius:var(--radius);padding:24px;display:grid;gap:16px;border-top:6px solid var(--amber)}
+label{display:grid;gap:6px;font-weight:700;font-size:15px}
+input,select,textarea{font:inherit;font-weight:400;padding:12px 14px;border:1px solid #cfd0d4;border-radius:8px;background:#fff;color:var(--ink);width:100%}
+input:focus,select:focus,textarea:focus{outline:3px solid #ffe7a3;border-color:var(--amber-dark)}
+.fine{font-size:13px;color:var(--muted);margin:0}
+.thanks{background:#fff;color:var(--ink);border-radius:var(--radius);padding:28px;border-top:6px solid var(--amber)}
+.areas{display:flex;flex-wrap:wrap;gap:8px;list-style:none;padding:0;margin:0}
+.areas li{background:#fff;border:1px solid var(--line);border-radius:999px;padding:6px 14px;font-size:15px}
+footer{padding:32px 0;color:var(--muted);font-size:14px}
+.sticky{position:fixed;left:0;right:0;bottom:0;display:grid;grid-template-columns:1fr 1.4fr;gap:10px;padding:10px 12px;background:var(--dark);z-index:20}
+.sticky .btn{padding:12px}
+@media(min-width:720px){
+  body{padding-bottom:0}
+  .sticky{display:none}
+  nav{display:flex}
+  .grid.three{grid-template-columns:repeat(3,1fr)}
+  .grid.five{grid-template-columns:repeat(auto-fit,minmax(190px,1fr))}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .split{display:grid;grid-template-columns:1fr 1.1fr;gap:48px;align-items:start}
+  .hero{padding:88px 0 96px}
+  .hero::after{width:520px;height:520px;right:-60px;bottom:-140px}
+  section{padding:80px 0}
+}
+</style>
+</head>
+<body>
+<p class="demo">Demo website by Adriel for a fictional builder. Nothing here is real and forms send nothing. <a href="/">Back to portfolio</a></p>
+
+<header>
+  <div class="wrap bar">
+    <a class="logo" href="#top">Tallwood<span> Reno</span></a>
+    <nav aria-label="Main">
+      <a href="#services">Services</a>
+      <a href="#work">Recent jobs</a>
+      <a href="#how">How it works</a>
+      <a href="#areas">Areas</a>
+    </nav>
+    <a class="btn small" href="#quote">Free quote</a>
+  </div>
+</header>
+
+<main id="top">
+  <div class="hero">
+    <div class="wrap">
+      <p class="eyebrow">Brisbane's northside</p>
+      <h1>Kitchens and bathrooms,<br>done on time and on budget.</h1>
+      <p class="lead">Fixed-price renovations with one point of contact from the first measure to the final clean. Licensed and fully insured.</p>
+      <div class="actions">
+        <a class="btn" href="#quote">Get a free quote</a>
+        <a class="btn line" href="tel:+61755502390">Call (07) 5550 2390</a>
+      </div>
+      <ul class="facts">
+        <li><b>48 h</b>Written quote after the measure</li>
+        <li><b>Fixed</b>Price agreed before we start</li>
+        <li><b>7 yrs</b>Workmanship guarantee</li>
+      </ul>
+    </div>
+  </div>
+
+  <section id="services">
+    <div class="wrap">
+      <h2>What we do</h2>
+      <p class="sub">Small team, no subcontractor roulette. The same crew starts and finishes your job.</p>
+      <div class="grid five">
+        <article class="card"><h3>Kitchens</h3><p>New layouts, stone benchtops, cabinetry and splashbacks.</p><span class="from">From $18,000</span></article>
+        <article class="card"><h3>Bathrooms</h3><p>Full strip-outs, waterproofing, tiling and fit-off.</p><span class="from">From $16,000</span></article>
+        <article class="card"><h3>Laundries</h3><p>Built-in laundries that fit a small space.</p><span class="from">From $7,500</span></article>
+        <article class="card"><h3>Decks &amp; patios</h3><p>Hardwood and composite decks, roofed patios.</p><span class="from">From $12,000</span></article>
+        <article class="card"><h3>Small jobs</h3><p>Doors, shelving, patching and repairs.</p><span class="from">From $350</span></article>
+      </div>
+    </div>
+  </section>
+
+  <section id="work" class="alt">
+    <div class="wrap">
+      <h2>Recent jobs</h2>
+      <p class="sub">Sample projects for this demo. A real site would show the builder's own photos here.</p>
+      <div class="grid three">
+        <article class="card job"><div class="pic k"><span>Kitchen</span></div><div><h3>Galley kitchen opened up, Chermside</h3><p>4 weeks · wall removed, island bench, new lighting.</p></div></article>
+        <article class="card job"><div class="pic b"><span>Bathroom</span></div><div><h3>1970s bathroom refit, Stafford</h3><p>3 weeks · walk-in shower, floor-to-ceiling tiles.</p></div></article>
+        <article class="card job"><div class="pic d"><span>Deck</span></div><div><h3>Spotted gum deck, Aspley</h3><p>2 weeks · 30 m² deck with stairs and balustrade.</p></div></article>
+      </div>
+    </div>
+  </section>
+
+  <section id="how">
+    <div class="wrap split">
+      <div>
+        <h2>How it works</h2>
+        <p class="sub">No surprises on price or timing. You get a weekly update with photos until handover.</p>
+      </div>
+      <ol class="steps">
+        <li><h3>Free measure and chat</h3><p>We visit, measure up and talk through what you want and your budget.</p></li>
+        <li><h3>Fixed-price quote in 48 hours</h3><p>Itemised, in writing, with a start date and how long it will take.</p></li>
+        <li><h3>Build with weekly updates</h3><p>One site lead, a tidy site, and photos every Friday.</p></li>
+        <li><h3>Handover and clean</h3><p>Final walk-through, a professional clean, and your 7-year guarantee.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="quote" class="quote">
+    <div class="wrap split">
+      <div>
+        <h2>Get a free quote</h2>
+        <p class="sub">Tell us about the job. We'll call within one business day to book a time to measure up.</p>
+        <p class="sub">Rather call? <a href="tel:+61755502390">(07) 5550 2390</a>, Monday to Saturday.</p>
+      </div>
+      <div>
+        <form id="quote-form">
+          <div class="row">
+            <label>Your name<input name="name" autocomplete="name" required></label>
+            <label>Mobile<input name="phone" type="tel" autocomplete="tel" required placeholder="04xx xxx xxx"></label>
+          </div>
+          <div class="row">
+            <label>Email<input name="email" type="email" autocomplete="email" required></label>
+            <label>Suburb<input name="suburb" autocomplete="address-level2" required></label>
+          </div>
+          <div class="row">
+            <label>Type of job
+              <select name="job" required>
+                <option value="">Choose one</option>
+                <option>Kitchen</option><option>Bathroom</option><option>Laundry</option><option>Deck or patio</option><option>Small job</option><option>Something else</option>
+              </select>
+            </label>
+            <label>Rough budget
+              <select name="budget">
+                <option>Not sure yet</option><option>Under $10,000</option><option>$10,000 to $25,000</option><option>$25,000 to $50,000</option><option>Over $50,000</option>
+              </select>
+            </label>
+          </div>
+          <label>When would you like it done?
+            <select name="when"><option>As soon as possible</option><option>In 1 to 3 months</option><option>In 3 to 6 months</option><option>Just planning</option></select>
+          </label>
+          <label>Tell us about the job<textarea name="details" rows="4" required placeholder="e.g. Small bathroom, want a walk-in shower instead of the bath"></textarea></label>
+          <button class="btn" type="submit">Send my quote request</button>
+          <p class="fine">Demo form: nothing is sent or stored.</p>
+        </form>
+        <div class="thanks" id="thanks" hidden tabindex="-1">
+          <h3>Thanks, we've got your request.</h3>
+          <p>On the real site this goes straight to the builder's phone and inbox, and you get an email with what happens next. In this demo nothing was sent.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="areas" class="alt">
+    <div class="wrap">
+      <h2>Areas we cover</h2>
+      <p class="sub">Brisbane's north and inner north, within about 25 minutes of Chermside.</p>
+      <ul class="areas">
+        <li>Chermside</li><li>Aspley</li><li>Stafford</li><li>Kedron</li><li>Nundah</li><li>Wavell Heights</li><li>Everton Park</li><li>Albany Creek</li><li>Clayfield</li><li>Windsor</li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">© Tallwood Renovations, a fictional business. Demo website designed and built by <a href="/">Adriel</a>.</div>
+</footer>
+
+<div class="sticky">
+  <a class="btn line" href="tel:+61755502390">Call</a>
+  <a class="btn" href="#quote">Free quote</a>
+</div>
+
+<script>
+document.getElementById('quote-form').addEventListener('submit', function (e) {
+  e.preventDefault()
+  this.hidden = true
+  var t = document.getElementById('thanks')
+  t.hidden = false
+  t.focus()
+})
+</script>
+</body>
+</html>

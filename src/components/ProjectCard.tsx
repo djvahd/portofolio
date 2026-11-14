@@ -18,6 +18,22 @@ function CardBody({ project }: { project: Project }) {
             {[project.role, project.year, project.note].filter(Boolean).join(' · ')}
           </p>
           <p className="mt-3 max-w-xl text-muted">{project.description}</p>
+          {project.caseStudy && (
+            <dl className="mt-5 max-w-xl space-y-3 text-sm">
+              {(
+                [
+                  ['Problem', project.caseStudy.problem],
+                  ['What I built', project.caseStudy.built],
+                  ['Result', project.caseStudy.result],
+                ] as const
+              ).map(([term, text]) => (
+                <div key={term}>
+                  <dt className="font-medium uppercase tracking-[0.15em] text-accent">{term}</dt>
+                  <dd className="mt-1 text-muted">{text}</dd>
+                </div>
+              ))}
+            </dl>
+          )}
         </div>
         {project.liveUrl ? (
           <span

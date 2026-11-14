@@ -37,7 +37,23 @@ describe('cv downloads', () => {
 
 describe('projects', () => {
   it('contains exactly these projects in order, with no Smart Odong', () => {
-    expect(projects.map((p) => p.slug)).toEqual(['arsipia', 'photobooth', 'harmoni-clothing'])
+    expect(projects.map((p) => p.slug)).toEqual([
+      'demo-physio',
+      'demo-renovations',
+      'demo-cafe',
+      'arsipia',
+      'photobooth',
+      'harmoni-clothing',
+    ])
+  })
+
+  it('gives every business demo a page in public/demos and a case study', () => {
+    const demos = projects.filter((p) => p.kind === 'demo')
+    expect(demos.length).toBeGreaterThanOrEqual(2)
+    for (const p of demos) {
+      expect(existsSync(`public${p.liveUrl}index.html`)).toBe(true)
+      expect(p.caseStudy?.result).toBeTruthy()
+    }
   })
 
   it('puts demos for businesses before other work', () => {
@@ -53,7 +69,7 @@ describe('projects', () => {
       expect(p.description).not.toBe('')
       expect(p.image).toBe(`/images/projects/${p.slug}.webp`)
       expect(existsSync(`public${p.image}`)).toBe(true)
-      expect(p.liveUrl === null || p.liveUrl.startsWith('https://')).toBe(true)
+      expect(p.liveUrl === null || /^(https:\/\/|\/demos\/)/.test(p.liveUrl)).toBe(true)
     }
   })
 
