@@ -8,6 +8,7 @@ export const profile: {
   fullName: string
   roles: { base: string; reveal: string }
   offer: string
+  speed: string
   cta: { label: string; short: string; href: string }
   about: string[]
   location: string
@@ -22,6 +23,8 @@ export const profile: {
   fullName: 'Jovanic Adriel Harjanto',
   roles: { base: 'Developer', reveal: 'Designer' },
   offer: 'Fast websites that bring small businesses more enquiries.',
+  // Measured 2026-11-16: Google Lighthouse, mobile, 3 runs per demo, every run 100
+  speed: 'The three demo sites score 100/100 for mobile performance in Google Lighthouse and show up in about 1 second.',
   cta: { label: 'Get a free homepage mock-up', short: 'Free mock-up', href: '#contact' },
   about: [
     "I'm Adriel, a web developer and designer studying computer science at Universitas Padjadjaran in Indonesia. I build fast, mobile-first websites for small businesses: clear about what you offer, easy to contact you from, and quick to load on a phone.",

@@ -16,6 +16,13 @@ it('has Open Graph tags with an image that exists', () => {
   expect(existsSync(`public${image}`)).toBe(true)
 })
 
+it('preloads the hero portrait the Hero component shows', () => {
+  const href = html.match(/rel="preload" as="image" href="([^"]+)"/)?.[1]
+  expect(href).toBeTruthy()
+  expect(readFileSync('src/components/Hero.tsx', 'utf-8')).toContain(`src="${href}"`)
+  expect(existsSync(`public${href}`)).toBe(true)
+})
+
 it('points robots.txt at the sitemap, which lists the canonical URL', () => {
   const canonical = html.match(/rel="canonical" href="([^"]+)"/)?.[1]
   expect(readFileSync('public/robots.txt', 'utf-8')).toContain(`Sitemap: ${canonical}sitemap.xml`)
