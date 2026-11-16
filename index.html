@@ -25,6 +25,8 @@
       content="Adriel, web developer and designer: fast websites that bring small businesses more enquiries."
     />
     <meta name="twitter:card" content="summary_large_image" />
+    <!-- The hero portrait is the largest thing on screen: fetch it before the JS bundle asks for it -->
+    <link rel="preload" as="image" href="/images/hero-cutout.webp" type="image/webp" fetchpriority="high" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
