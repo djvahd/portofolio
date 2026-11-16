@@ -16,6 +16,7 @@ export function Services() {
         <p className="mt-4 max-w-xl text-lg text-muted">
           Fixed prices, no hourly billing. AUD for Australia, SGD for Singapore.
         </p>
+        <p className="mt-2 max-w-xl text-muted">{profile.speed}</p>
       </FadeUp>
       <div className="mt-12 grid gap-6 md:grid-cols-3">
         {packages.map((p, i) => (

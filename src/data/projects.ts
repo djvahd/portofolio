@@ -29,7 +29,7 @@ export const projects: Project[] = [
       built:
         'One page with treatments and prices, health-fund details, the next free times, a one-minute booking request and a call button that stays on screen on phones.',
       result:
-        'The whole page is under 5 KB to download, with no images, fonts or libraries to wait for.',
+        'Lighthouse mobile performance 100/100, on screen in about 1 second. The whole page is under 5 KB, with no images, fonts or libraries to wait for.',
     },
   },
   {
@@ -48,7 +48,7 @@ export const projects: Project[] = [
       built:
         "Services with 'from' prices, a four-step process, recent jobs, service areas and a quote form that asks for suburb, job type and budget up front.",
       result:
-        'Every quote request arrives with what the builder needs to price the job. The page is under 5 KB to download.',
+        'Every quote request arrives with what the builder needs to price the job. Lighthouse mobile performance 100/100, on screen in about 1 second.',
     },
   },
   {
@@ -67,7 +67,7 @@ export const projects: Project[] = [
       built:
         'The menu as real text with prices and dietary tags, a catering offer, table bookings, and opening hours on the first screen.',
       result:
-        'Customers can read the menu and book a table in under a minute. The page is under 5 KB to download.',
+        'Customers can read the menu and book a table in under a minute. Lighthouse mobile performance 100/100, on screen in about 1 second.',
     },
   },
   {

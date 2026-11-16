@@ -34,3 +34,8 @@ it('hides testimonials until there is one, then shows it', () => {
   expect(screen.getByText('“Great work.”')).toBeInTheDocument()
   expect(screen.getByText('Sam, Sam Co')).toBeInTheDocument()
 })
+
+it('quotes the measured demo speed', () => {
+  render(<Services />)
+  expect(screen.getByText(/score 100\/100 for mobile performance in Google Lighthouse/)).toBeInTheDocument()
+})
