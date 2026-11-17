@@ -100,7 +100,7 @@ export const projects: Project[] = [
       built:
         'A photobooth that runs in the browser: a kiosk page with camera, preview and a QR code, plus an admin panel for sessions and the print queue. Photos go to Google Drive through Google Apps Script.',
       result:
-        "Used at a client's event, with every photo uploaded automatically.",
+        "Used at a client's event: every photo uploaded automatically and guests got theirs by scanning a QR code.",
     },
   },
   {
