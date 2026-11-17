@@ -6,8 +6,6 @@ export interface Project {
   description: string
   image: string
   liveUrl: string | null
-  /** 'demo' sites are built for clients like the visitor; 'other' is earlier work */
-  kind: 'demo' | 'other'
   note: string | null
   caseStudy: { problem: string; built: string; result: string } | null
 }
@@ -21,7 +19,6 @@ export const projects: Project[] = [
     description: 'A booking-first website for a physiotherapy clinic in Perth.',
     image: '/images/projects/demo-physio.webp',
     liveUrl: '/demos/physio/',
-    kind: 'demo',
     note: 'Demo, fictional clinic',
     caseStudy: {
       problem:
@@ -40,7 +37,6 @@ export const projects: Project[] = [
     description: 'A quote-request website for a kitchen and bathroom renovator in Brisbane.',
     image: '/images/projects/demo-renovations.webp',
     liveUrl: '/demos/renovations/',
-    kind: 'demo',
     note: 'Demo, fictional builder',
     caseStudy: {
       problem:
@@ -59,7 +55,6 @@ export const projects: Project[] = [
     description: 'A menu and table-booking website for a neighbourhood cafe in Sydney.',
     image: '/images/projects/demo-cafe.webp',
     liveUrl: '/demos/cafe/',
-    kind: 'demo',
     note: 'Demo, fictional cafe',
     caseStudy: {
       problem:
@@ -79,7 +74,6 @@ export const projects: Project[] = [
       'Automation on top of Google Drive that keeps files tidy and keeps knowledge with the team when people leave. Built for offices, startups and campuses.',
     image: '/images/projects/arsipia.webp',
     liveUrl: 'https://arsipia.netlify.app/',
-    kind: 'other',
     note: 'Site in Indonesian',
     caseStudy: null,
   },
@@ -92,7 +86,6 @@ export const projects: Project[] = [
       "A browser photobooth for a client's event. Guests take their photos on the spot and every photo uploads automatically.",
     image: '/images/projects/photobooth.webp',
     liveUrl: 'https://photobooth-webapp.netlify.app/',
-    kind: 'other',
     note: 'Site in Indonesian',
     caseStudy: null,
   },
@@ -105,7 +98,6 @@ export const projects: Project[] = [
       'An online store for custom clothing with no minimum order, for creators, brands and communities.',
     image: '/images/projects/harmoni-clothing.webp',
     liveUrl: 'https://harmoniclothing.com/',
-    kind: 'other',
     note: 'Site in Indonesian',
     caseStudy: null,
   },
