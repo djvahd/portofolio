@@ -3,9 +3,9 @@ import { existsSync, readFileSync } from 'node:fs'
 const html = readFileSync('index.html', 'utf-8')
 const meta = (attr: string) => html.match(new RegExp(String.raw`${attr}"\s+content="([^"]+)"`))?.[1]
 
-it('has a client-facing title and description', () => {
-  expect(html).toMatch(/<title>[^<]*small businesses[^<]*<\/title>/)
-  expect(meta('name="description')).toMatch(/small businesses/)
+it('has a title and description', () => {
+  expect(html).toContain('<title>Jovanic Adriel Harjanto | Full-Stack Developer &amp; Designer</title>')
+  expect(meta('name="description')).toMatch(/^Portfolio of Jovanic Adriel Harjanto/)
 })
 
 it('has Open Graph tags with an image that exists', () => {

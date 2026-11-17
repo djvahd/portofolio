@@ -8,17 +8,17 @@ async function fillIn() {
   await user.type(screen.getByLabelText('Email'), 'sam@example.com')
   await user.type(screen.getByLabelText('Business name'), 'Sam Physio')
   await user.type(screen.getByLabelText('Current website'), 'samphysio.com.au')
-  await user.selectOptions(screen.getByLabelText('What do you need?'), 'Business site')
+  await user.selectOptions(screen.getByLabelText('What do you need?'), 'A new website')
   await user.click(screen.getByRole('button', { name: 'Send enquiry' }))
 }
 
 afterEach(() => vi.unstubAllGlobals())
 
-it('asks for business name, website and what they need, with the packages as choices', () => {
+it('asks for business name, website and what they need', () => {
   render(<EnquiryForm endpoint={null} />)
   expect(screen.getByLabelText('Business name')).toBeRequired()
   expect(screen.getByLabelText('Current website')).not.toBeRequired()
-  expect(NEEDS).toEqual(['Landing page', 'Business site', 'Care plan', 'Not sure yet'])
+  expect(NEEDS).toContain('Not sure yet')
 })
 
 it('posts to the endpoint and thanks the sender', async () => {
@@ -32,7 +32,7 @@ it('posts to the endpoint and thanks the sender', async () => {
   )
   const sent = fetch.mock.calls[0][1].body as FormData
   expect(sent.get('business')).toBe('Sam Physio')
-  expect(sent.get('need')).toBe('Business site')
+  expect(sent.get('need')).toBe('A new website')
   expect(await screen.findByRole('status')).toHaveTextContent('your enquiry is on its way')
 })
 

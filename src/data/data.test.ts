@@ -5,7 +5,7 @@ import { projects } from './projects'
 describe('profile', () => {
   it('has the required identity fields', () => {
     expect(profile.name).toBe('Adriel')
-    expect(profile.offer.length).toBeGreaterThan(20)
+    expect(profile.tagline).toBe('This is Me')
     expect(profile.roles).toEqual({ base: 'Developer', reveal: 'Designer' })
     expect(profile.about.join(' ').length).toBeGreaterThan(20)
   })
