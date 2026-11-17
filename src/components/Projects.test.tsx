@@ -1,11 +1,10 @@
 import { render, screen } from '@testing-library/react'
 import { Projects } from './Projects'
 
-it('renders every project, earlier work under Other work', () => {
+it('renders every project in one grid', () => {
   render(<Projects />)
-  expect(screen.getAllByRole('article')).toHaveLength(6)
-  expect(screen.getByTestId('demo-grid').querySelectorAll('article')).toHaveLength(3)
-  expect(screen.getByRole('heading', { level: 3, name: 'Other work' })).toBeInTheDocument()
+  expect(screen.getByTestId('project-grid').querySelectorAll('article')).toHaveLength(6)
+  expect(screen.queryByText('Other work')).toBeNull()
 })
 
 it('lays the cards out two per row from the md breakpoint up', () => {

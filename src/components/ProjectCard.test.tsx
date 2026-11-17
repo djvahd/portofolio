@@ -10,7 +10,6 @@ const base: Project = {
   description: 'A demo description.',
   image: '/images/projects/demo.webp',
   liveUrl: null,
-  kind: 'other',
   note: null,
   caseStudy: null,
 }

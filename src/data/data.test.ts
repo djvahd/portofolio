@@ -48,7 +48,7 @@ describe('projects', () => {
   })
 
   it('gives every business demo a page in public/demos and a case study', () => {
-    const demos = projects.filter((p) => p.kind === 'demo')
+    const demos = projects.filter((p) => p.liveUrl?.startsWith('/demos/'))
     expect(demos.length).toBeGreaterThanOrEqual(2)
     for (const p of demos) {
       expect(existsSync(`public${p.liveUrl}index.html`)).toBe(true)
@@ -56,10 +56,6 @@ describe('projects', () => {
     }
   })
 
-  it('puts demos for businesses before other work', () => {
-    const kinds = projects.map((p) => p.kind)
-    expect(kinds).toEqual([...kinds].sort())
-  })
 
   it('has complete fields and valid image/link shapes', () => {
     for (const p of projects) {
