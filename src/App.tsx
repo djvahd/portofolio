@@ -2,11 +2,8 @@ import { About } from './components/About'
 import { Contact } from './components/Contact'
 import { Hero } from './components/Hero'
 import { Nav } from './components/Nav'
-import { Process } from './components/Process'
 import { Projects } from './components/Projects'
 import { ScrollProgress } from './components/ScrollProgress'
-import { Services } from './components/Services'
-import { Testimonials } from './components/Testimonials'
 import { useTheme } from './hooks/useTheme'
 
 export default function App() {
@@ -26,9 +23,6 @@ export default function App() {
         {/* After the hero scroll the page stays in the opposite theme, all the way down */}
         <div data-theme={theme === 'light' ? 'dark' : 'light'} className="bg-bg text-fg">
           <Projects />
-          <Services />
-          <Process />
-          <Testimonials />
           <About />
           <Contact />
         </div>

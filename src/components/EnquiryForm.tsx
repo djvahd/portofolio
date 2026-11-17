@@ -1,8 +1,7 @@
 import { useState, type FormEvent } from 'react'
 import { profile } from '../data/profile'
-import { packages } from '../data/services'
 
-export const NEEDS = [...packages.map((p) => p.name), 'Not sure yet']
+export const NEEDS = ['A new website', 'A redesign of my current site', 'Help with an existing site', 'Not sure yet']
 
 const FIELDS: [name: string, label: string][] = [
   ['name', 'Name'],
