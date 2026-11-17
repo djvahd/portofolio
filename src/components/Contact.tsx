@@ -14,8 +14,7 @@ export function Contact() {
           Contact
         </h2>
         <p className="mt-4 max-w-xl text-lg">
-          Tell me about your business and what the site should do. I&apos;ll reply with a few
-          questions and a free homepage mock-up.
+          Tell me about your project and I&apos;ll reply by email.
         </p>
         <p className="mt-2 text-muted">{profile.location}</p>
         <div className="mt-10 max-w-3xl">
