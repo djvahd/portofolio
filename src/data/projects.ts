@@ -75,7 +75,14 @@ export const projects: Project[] = [
     image: '/images/projects/arsipia.webp',
     liveUrl: 'https://arsipia.netlify.app/',
     note: 'Site in Indonesian',
-    caseStudy: null,
+    caseStudy: {
+      problem:
+        'Shared Google Drive folders get messy, and when someone leaves a team their files and know-how often leave with them.',
+      built:
+        'An automation layer on top of Google Drive that keeps files tidy and keeps knowledge with the team, built with a team of 3.',
+      result:
+        'A live product site, shaped by our own market and customer-journey research for an entrepreneurship course.',
+    },
   },
   {
     slug: 'photobooth',
@@ -87,7 +94,14 @@ export const projects: Project[] = [
     image: '/images/projects/photobooth.webp',
     liveUrl: 'https://photobooth-webapp.netlify.app/',
     note: 'Site in Indonesian',
-    caseStudy: null,
+    caseStudy: {
+      problem:
+        'An event photobooth usually needs dedicated hardware and software, and guests wait to get their photos.',
+      built:
+        'A photobooth that runs in the browser: a kiosk page with camera, preview and a QR code, plus an admin panel for sessions and the print queue. Photos go to Google Drive through Google Apps Script.',
+      result:
+        "Used at a client's event, with every photo uploaded automatically.",
+    },
   },
   {
     slug: 'harmoni-clothing',
@@ -99,6 +113,13 @@ export const projects: Project[] = [
     image: '/images/projects/harmoni-clothing.webp',
     liveUrl: 'https://harmoniclothing.com/',
     note: 'Site in Indonesian',
-    caseStudy: null,
+    caseStudy: {
+      problem:
+        'Custom clothing makers usually ask for large minimum orders, which shuts out small creators and communities.',
+      built:
+        'A print-on-demand store and design marketplace with no minimum order, online payment (Midtrans) and shipping rates (Biteship), in Indonesian and English. Laravel API with a Next.js front end.',
+      result:
+        'A working demo with checkout, payment and shipping, covered by 232 automated backend tests.',
+    },
   },
 ]

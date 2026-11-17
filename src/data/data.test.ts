@@ -69,6 +69,14 @@ describe('projects', () => {
     }
   })
 
+  it('gives every project a problem, what I built and a result', () => {
+    for (const p of projects) {
+      expect(p.caseStudy?.problem).toBeTruthy()
+      expect(p.caseStudy?.built).toBeTruthy()
+      expect(p.caseStudy?.result).toBeTruthy()
+    }
+  })
+
   it('has unique slugs', () => {
     expect(new Set(projects.map((p) => p.slug)).size).toBe(projects.length)
   })
