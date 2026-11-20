@@ -45,7 +45,8 @@ export const profile: {
   },
   email: 'adrielharjanto@gmail.com',
   // A Formspree-style endpoint (POST, JSON reply). While null the form opens a prefilled email.
-  formEndpoint: null,
+  formEndpoint:
+    'https://script.google.com/macros/s/AKfycbypxMSkcq2W5njnwL8fZgBXwZYka2MHMN0kPEtKURdf7IR1U1F793adp1lX6oR8_OTaAA/exec',
   // e.g. a Calendly or Cal.com link; the "book a call" link shows once this is set
   bookingUrl: null,
   socials: [

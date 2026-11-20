@@ -30,7 +30,8 @@ it('posts to the endpoint and thanks the sender', async () => {
     'https://forms.example/f/abc',
     expect.objectContaining({ method: 'POST' }),
   )
-  const sent = fetch.mock.calls[0][1].body as FormData
+  const sent = fetch.mock.calls[0][1].body as URLSearchParams
+  expect(sent).toBeInstanceOf(URLSearchParams)
   expect(sent.get('business')).toBe('Sam Physio')
   expect(sent.get('need')).toBe('A new website')
   expect(await screen.findByRole('status')).toHaveTextContent('your enquiry is on its way')
