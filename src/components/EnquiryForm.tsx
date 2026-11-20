@@ -39,9 +39,11 @@ export function EnquiryForm({ endpoint = profile.formEndpoint }: { endpoint?: st
     }
     setStatus('sending')
     try {
+      // URL-encoded, not multipart: Google Apps Script only parses this into e.parameter
+      const body = new URLSearchParams([...data.entries()].map(([k, v]) => [k, String(v)]))
       const res = await fetch(endpoint, {
         method: 'POST',
-        body: data,
+        body,
         headers: { Accept: 'application/json' },
       })
       setStatus(res.ok ? 'sent' : 'error')
